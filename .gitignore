@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.env*
+.DS_Store
+specs/reports/.*.json
+# отчёт geo-check за день — пишет npm run check; в git не храним (иначе Actions ломает git pull --rebase)
+specs/reports/geo-check-*.md
+# отчёт «до» у переноса — храним: его требует npm run check
+!specs/reports/geo-check-before-*.md

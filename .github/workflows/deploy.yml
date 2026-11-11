@@ -1,0 +1,29 @@
+# Выкладка сайта — вызов общего сценария nikalimp/deploy-kit (стандарт «Публикация — стандарт»).
+# Порядок: SSH (rsync) → если не прошёл, FTP → если упали оба, сборка в артефакте site-build и scripts/deploy-site.sh с Mac.
+# Значения with: повторяют publish.json. Секреты (Settings → Secrets and variables → Actions):
+#   FTP_HOST, FTP_USER, FTP_PASS, FTP_DIR (относительно корня FTP, со слешем; REG.RU — www/<домен>/) — обязательны;
+#   SSH_KEY, SSH_HOST, SSH_USER, SITE_DIR (абсолютный, со слешем), SSH_KNOWN_HOSTS — если SSH из Actions работает
+#   (у REG.RU порт 22 для GitHub закрыт — SSH-секреты не нужны, ключ только для scripts/deploy-site.sh с Mac).
+# Монорепо: у каждого приложения свой файл workflow, триггер on.push.paths — на его папку.
+name: Deploy
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["specs/**", "*.md", "content/factory/**"]
+  workflow_dispatch: {}
+concurrency: { group: deploy, cancel-in-progress: false }
+jobs:
+  site:
+    # без этой строки запуск падает со startup_failure: сценарий коммитит медиа обратно в репозиторий
+    permissions: { contents: write }
+    uses: nikalimp/deploy-kit/.github/workflows/site.yml@main
+    with:
+      adapter: ssh-ftp            # ssh-ftp | ftp | s3 | manual-zip | tilda
+      site_dir: "."               # монорепо: apps/site
+      out_dir: out                # Vite: dist
+      app_path: ""                # приложение в подпапке сайта: "test/app/"
+      rsync_exclude: ""           # подпапки других приложений и файлы только на сервере: "test/ api/config.php api/logs/"
+      url: https://example.ru
+      # media_brand: путь к brand.json от site_dir. По умолчанию content/factory/brand.json;
+      # если завод ещё не переведён в content/factory/ — фактический путь (ECO-PRO: content/media/brand.json)
+    secrets: inherit

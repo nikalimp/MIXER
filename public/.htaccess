@@ -1,0 +1,21 @@
+# REG.RU (ISPmanager, Apache за nginx) — статический экспорт Next.js.
+# HTTPS и www → без www включаются ГАЛОЧКАМИ в ISPmanager («Перенаправлять HTTP-запросы в HTTPS», «Редирект домена»).
+# Правило RewriteCond %{HTTPS} / %{SERVER_PORT} здесь даёт бесконечный цикл: nginx снимает TLS до Apache. npm run check его не пропустит.
+DirectoryIndex index.html index.php
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# 301 переноса — сюда, по одному правилу на старый адрес (карта из specs/02-spec.md):
+# RewriteRule ^old-page/?$ /new-page/ [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+<FilesMatch "\.(html|xml|txt|json)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+<FilesMatch "\.(js|css|woff2?|png|jpe?g|webp|avif|svg|ico|mp4|webm)$">
+Header set Cache-Control "public, max-age=2592000"
+</FilesMatch>
+</IfModule>
