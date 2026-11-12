@@ -1,7 +1,7 @@
 // Контент главной. Блоки — по specs/02-spec.md §5. Тексты старого сайта — с правками Ника v0.2 (грамматика, ё, структура курсов).
 
 export type Faq = { q: string; a: string };
-export type Hotspot = { label: string; text: string; x: number; y: number; side: "l" | "r" };
+export type Hotspot = { label: string; text: string; x: number; y: number; side: "l" | "r"; minor?: boolean }; // minor — скрыта на телефоне
 export type Equipment = { name: string; kind: string; photo: string; hotspots?: Hotspot[] };
 
 export const home = {
@@ -95,13 +95,42 @@ export const home = {
         { label: "Hot Cue", text: "мгновенно переносит к сохранённым точкам трека.", x: 16, y: 32, side: "r" },
         { label: "Джог", text: "край подгоняет темп, верхняя часть — для скретча.", x: 50, y: 65, side: "r" },
         { label: "Темп", text: "фейдер меняет скорость трека, чтобы BPM совпал с соседним.", x: 84, y: 77, side: "l" },
-        { label: "Cue", text: "ставит точку старта: держишь — играет, отпустил — вернулся к точке.", x: 16, y: 82, side: "r" },
+        { label: "Cue", text: "ставит точку старта: держишь — играет, отпустил — вернулся к точке.", x: 16, y: 82, side: "r", minor: true },
         { label: "Play/Pause", text: "запускает и останавливает трек.", x: 16, y: 94, side: "r" },
       ],
     },
-    { name: "DJM-900NXS2", kind: "Микшер", photo: "/img/eq-djm-900nxs2.webp" },
-    { name: "XDJ-RX3", kind: "DJ-система", photo: "/img/eq-xdj-rx3.webp" },
-    { name: "DDJ XP2", kind: "Контроллер", photo: "/img/eq-ddj-xp2.webp" },
+    {
+      name: "DJM-900NXS2", kind: "Микшер", photo: "/img/eq-djm-900nxs2.webp",
+      hotspots: [
+        { label: "Trim", text: "выставляет входной уровень канала, чтобы треки звучали одинаково громко.", x: 30, y: 12, side: "r", minor: true },
+        { label: "EQ", text: "убирает или добавляет низы, середину и верх — так треки не мешают друг другу.", x: 30, y: 33, side: "r" },
+        { label: "Beat FX", text: "эффекты в такт музыке: эхо, реверб, фленжер.", x: 82, y: 28, side: "l" },
+        { label: "Cue", text: "выводит канал в наушники, чтобы подготовить следующий трек.", x: 62, y: 57, side: "l", minor: true },
+        { label: "Фейдеры", text: "громкость каждого канала.", x: 30, y: 73, side: "r" },
+        { label: "Кроссфейдер", text: "плавно переводит звук с одной деки на другую.", x: 46, y: 92, side: "r" },
+      ],
+    },
+    {
+      name: "XDJ-RX3", kind: "DJ-система", photo: "/img/eq-xdj-rx3.webp",
+      hotspots: [
+        { label: "Экран", text: "сенсорный: волны обеих дек и библиотека треков.", x: 50, y: 29, side: "r" },
+        { label: "Джог", text: "темп и скретч — как на CDJ.", x: 18, y: 57, side: "r" },
+        { label: "Микшер", text: "встроенный: EQ, фильтры и фейдеры на два канала.", x: 45, y: 55, side: "r", minor: true },
+        { label: "Пэды", text: "хот-кью, лупы и сэмплы под пальцами.", x: 17, y: 76, side: "r", minor: true },
+        { label: "Темп", text: "фейдер подгоняет BPM под соседний трек.", x: 94, y: 70, side: "l" },
+        { label: "Кроссфейдер", text: "переводит звук с деки на деку.", x: 50, y: 78, side: "l", minor: true },
+      ],
+    },
+    {
+      name: "DDJ XP2", kind: "Контроллер", photo: "/img/eq-ddj-xp2.webp",
+      hotspots: [
+        { label: "Loop", text: "зацикливает фрагмент трека нужной длины.", x: 15, y: 20, side: "r", minor: true },
+        { label: "Энкодер", text: "листает библиотеку и загружает трек на деку.", x: 50, y: 21, side: "r" },
+        { label: "Режимы пэдов", text: "выбирают, что делают пэды: хот-кью, луп, сэмплер.", x: 16, y: 40, side: "r", minor: true },
+        { label: "Пэды", text: "16 пэдов на деку — хот-кью, сэмплы, ролл.", x: 27, y: 60, side: "r" },
+        { label: "FX-полоса", text: "эффект пальцем по сенсорной ленте.", x: 95, y: 63, side: "l" },
+      ],
+    },
   ] as Equipment[],
 
   services: [

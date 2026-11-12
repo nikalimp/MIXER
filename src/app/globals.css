@@ -184,8 +184,7 @@
 .eq-title { grid-column: 1 / -1; margin-top: clamp(12px, 2vw, 28px); }
 .eq { display: flex; flex-direction: column; gap: 4px; grid-column: span 6; }
 @media (min-width: 640px) { .eq { grid-column: span 3; } }
-.eq img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: 8px; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
-.eq:hover img { transform: scale(1.05) rotate(-1deg); }
+.eq img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: 8px; }
 .eq-kind { font-size: 11px; color: var(--muted-foreground); text-transform: uppercase; font-weight: 700; }
 .eq-name { font-weight: 800; font-size: clamp(11px, 3vw, 18px); white-space: nowrap; }
 
@@ -274,7 +273,7 @@
 
 /* ---------- Анимации (v0.3). Без JS и при «уменьшить движение» всё видно сразу ---------- */
 .tile, .collage-ph { transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s; }
-.course:hover, .service:hover, .mat:hover, .eq:hover, .teacher:hover { transform: translateY(-4px); box-shadow: 0 18px 40px oklch(0 0 0 / 0.12); }
+.course:hover, .service:hover, .mat:hover, .teacher:hover { transform: translateY(-4px); box-shadow: 0 18px 40px oklch(0 0 0 / 0.12); }
 @media (prefers-reduced-motion: no-preference) {
   .js .reveal, .js .reveal-stagger > * { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); }
   .js .reveal.in, .js .reveal-stagger.in > * { opacity: 1; transform: none; }
@@ -375,4 +374,4 @@
 .hs-l .hs-tip { right: calc(100% + 10px); }
 .hs:hover .hs-tip, .hs:focus .hs-tip { opacity: 1; visibility: visible; }
 .hs:hover, .hs:focus { z-index: 6; }
-@media (max-width: 639px) { .hs:nth-of-type(2), .hs:nth-of-type(5) { display: none; } .hs { width: 18px; height: 18px; margin: -9px 0 0 -9px; } .hs::before { font-size: 12px; } }
+@media (max-width: 639px) { .hs-minor { display: none; } .hs { width: 18px; height: 18px; margin: -9px 0 0 -9px; } .hs::before { font-size: 12px; } }
