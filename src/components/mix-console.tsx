@@ -1,7 +1,7 @@
 "use client";
 // Игра «Сведи трек» (spec §7.1, v0.4: корпус пульта — фон контейнера .mix-board, без отдельной плашки в SVG): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
 // Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от 0:40) или «Ещё раз» (промах).
-// Web Audio API без библиотек. Звук грузится только после первого нажатия. Джоги — скретч.
+// Web Audio API без библиотек. Треки грузятся сразу после загрузки страницы, звук — после нажатия «Начать». Джоги — скретч.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SevenSeg } from "./seven-seg";
 import { LeadDialog } from "./lead-dialog";
@@ -176,23 +176,38 @@ export function MixConsole() {
     raf.current = requestAnimationFrame(tick);
   }, [draw, stopAll]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Треки грузятся заранее, после загрузки страницы (Ник, v0.7): к нажатию «Начать» они уже готовы.
+  // AudioContext без жеста пользователя создаётся «на паузе» — декодировать можно, играть начнём после resume() по нажатию.
+  const loadRef = useRef<Promise<void> | null>(null);
+  const ensureLoaded = useCallback(() => {
+    if (loadRef.current) return loadRef.current;
+    loadRef.current = (async () => {
+      const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AC(); ctxRef.current = ctx;
+      const master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+      const load = async (u: string) => ctx.decodeAudioData(await (await fetch(u)).arrayBuffer());
+      const [a, b] = await Promise.all([load(TRACKS.A), load(TRACKS.B)]);
+      const { A, B } = decks.current;
+      A.buffer = a; B.buffer = b; A.rev = reverse(ctx, a); B.rev = reverse(ctx, b);
+      [A, B].forEach((d) => { d.gain = ctx.createGain(); d.gain.gain.value = 0; d.gain.connect(master); });
+    })().catch((e) => { loadRef.current = null; ctxRef.current?.close().catch(() => {}); ctxRef.current = null; throw e; });
+    return loadRef.current;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let t = 0;
+    const kick = () => { t = window.setTimeout(() => ensureLoaded().catch(() => {}), 1200); };
+    if (document.readyState === "complete") kick(); else window.addEventListener("load", kick, { once: true });
+    return () => { clearTimeout(t); window.removeEventListener("load", kick); };
+  }, [ensureLoaded]);
+
   const start = useCallback(async () => {
     if (phaseRef.current === "loading") return;
     try {
-      if (!ctxRef.current) {
-        setPhase("loading");
-        const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        const ctx = new AC(); ctxRef.current = ctx;
-        const master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
-        const load = async (u: string) => ctx.decodeAudioData(await (await fetch(u)).arrayBuffer());
-        const [a, b] = await Promise.all([load(TRACKS.A), load(TRACKS.B)]);
-        const { A, B } = decks.current;
-        A.buffer = a; B.buffer = b; A.rev = reverse(ctx, a); B.rev = reverse(ctx, b);
-        [A, B].forEach((d) => { d.gain = ctx.createGain(); d.gain.gain.value = 0; d.gain.connect(master); });
-      }
-      await ctxRef.current.resume();
+      if (!decks.current.A.buffer) setPhase("loading");
+      await ensureLoaded();
+      await ctxRef.current!.resume();
     } catch {
-      ctxRef.current = null;
       setPhase("idle"); setStatus("НЕТ СВЯЗИ"); setLive("Треки не загрузились. Проверьте интернет и нажмите «Начать».");
       return;
     }
@@ -209,7 +224,7 @@ export function MixConsole() {
     const r = wrap.current?.getBoundingClientRect();
     if (r && (r.top < 70 || r.bottom > window.innerHeight)) wrap.current?.scrollIntoView({ block: "center", behavior: reduced.current ? "auto" : "smooth" });
     loop();
-  }, [loop]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [loop, ensureLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onButton = () => {
     const ph = phaseRef.current;
@@ -237,7 +252,7 @@ export function MixConsole() {
       const ang = (e: PointerEvent) => { const p = svgPoint(e); return Math.atan2(p.y - JOG[id].cy, p.x - JOG[id].cx); };
       on(jog, "pointerdown", (e) => {
         if (!ctxRef.current || !d.buffer) return;
-        e.preventDefault(); (jog as Element).setPointerCapture(e.pointerId);
+        e.preventDefault(); (jog as Element).setPointerCapture(e.pointerId); ctxRef.current.resume(); // скретч работает и до «Начать»
         d.pos = curPos(d); d.wasPlaying = d.playing; stopSrc(d); d.playing = false; d.scratching = true;
         last = ang(e); lastT = performance.now();
       });
@@ -271,7 +286,7 @@ export function MixConsole() {
     draw();
     return () => {
       off.forEach((f) => f()); document.removeEventListener("keydown", onKey); document.removeEventListener("visibilitychange", onVis);
-      cancelAnimationFrame(raf.current); ctxRef.current?.close();
+      cancelAnimationFrame(raf.current); ctxRef.current?.close(); ctxRef.current = null; loadRef.current = null;
     };
   }, [mix]); // eslint-disable-line react-hooks/exhaustive-deps
 

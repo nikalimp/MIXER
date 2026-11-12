@@ -4,7 +4,6 @@ import { site } from "@/content/site";
 import { materials, materialsHowTo } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
 import { ScrollFill } from "@/components/scroll-fill";
-import { FormFx } from "@/components/form-fx";
 import { LeadForm } from "@/components/lead-form";
 import { FaqList } from "@/components/faq";
 import { JsonLd } from "@/components/json-ld";
@@ -90,13 +89,15 @@ export default function Home() {
             <article key={t.name} className="tile tile-white teacher">
               <div className="teacher-ph">
                 <img src={t.photo} alt={`${t.name} — ${t.role.toLowerCase()} MIXER`} width={800} height={1000} loading="lazy" />
+                <img className="teacher-tag spray" src={`/graffiti/tag-${t.photo.match(/teacher-(\w+)/)![1]}.svg`} alt="" loading="lazy" />
+              </div>
+              <div className="teacher-info">
+                <h3 className="h3">{t.name}</h3>
                 <ul className="teacher-tags">
                   <li>{t.role}</li>
                   <li>{t.years} за пультом</li>
                 </ul>
-                <img className="teacher-tag spray" src={`/graffiti/tag-${t.photo.match(/teacher-(\w+)/)![1]}.svg`} alt="" loading="lazy" />
               </div>
-              <h3 className="h3">{t.name}</h3>
             </article>
           ))}
           <h3 className="h3 eq-title">Оборудование</h3>
@@ -145,25 +146,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* Граффити-стена (v0.6), декоративная */}
-      <div className="sec" aria-hidden="true">
-        <div className="wall reveal">
-          <img className="wall-bg" src="/img/studio-05.webp" alt="" width={900} height={1125} loading="lazy" />
-          <img className="w-mixer spray" src="/graffiti/throwup-mixer.svg" alt="" loading="lazy" />
-          <img className="w-boom spray" src="/graffiti/throwup-boom.svg" alt="" loading="lazy" />
-          <img className="w-tag spray" src="/graffiti/tag-yunpronto.svg" alt="" loading="lazy" />
-          <img className="slap w-s1" src="/graffiti/sticker-1sec.svg" alt="" loading="lazy" />
-          <img className="slap w-s2" src="/graffiti/sticker-staya.svg" alt="" loading="lazy" />
-          <img className="slap w-s3" src="/graffiti/sticker-noskip.svg" alt="" loading="lazy" />
-        </div>
-      </div>
-
       {/* Вопросы */}
       <section className="sec" aria-labelledby="faq-h">
-        <div className="sec-title reveal g-wrap">
-          <h2 id="faq-h" className="h2">Частые вопросы</h2>
-          <img className="g g-arrow" src="/graffiti/doodle-arrow.svg" alt="" width={260} height={140} loading="lazy" />
-        </div>
+        <h2 id="faq-h" className="h2 sec-title reveal">Частые вопросы</h2>
         <div className="reveal"><FaqList items={home.faq} /></div>
       </section>
 
@@ -189,23 +174,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Форма — финальная стена (v0.6): пластинка крутится быстрее с каждым заполненным полем */}
+      {/* Форма — синяя плитка, поля в один ряд (v0.7) */}
       <section className="sec" id="form" aria-labelledby="form-h">
-        <div className="form-wall reveal" data-level="0">
-          <img className="fw-bg spray" src="/graffiti/throwup-mixer.svg" alt="" loading="lazy" />
-          <div className="fw-copy">
-            <p className="eyebrow">Последний трек</p>
+        <div className="tile tile-blue form-tile reveal">
+          <div className="form-head">
             <h2 id="form-h" className="h2">{home.form.title}</h2>
             <p className="lead-text">{home.form.text}</p>
-            <div className="vinyl" aria-hidden="true"><span className="vinyl-label">MIXER</span></div>
           </div>
-          <div className="pass">
-            <img className="slap pass-sticker" src="/graffiti/sticker-pass.svg" alt="" loading="lazy" />
-            <LeadForm source="form" button={home.form.button} />
-          </div>
-          <img className="slap fw-s1" src="/graffiti/sticker-dropit.svg" alt="" loading="lazy" />
-          <img className="slap fw-s2" src="/graffiti/sticker-boomboom.svg" alt="" loading="lazy" />
-          <FormFx />
+          <LeadForm source="form" button={home.form.button} dark row />
         </div>
       </section>
     </>
