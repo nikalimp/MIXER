@@ -1,5 +1,5 @@
 "use client";
-// Игра «Сведи трек» (spec §7.1, v0.3): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
+// Игра «Сведи трек» (spec §7.1, v0.4: корпус пульта — фон контейнера .mix-board, без отдельной плашки в SVG): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
 // Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от 0:40) или «Ещё раз» (промах).
 // Web Audio API без библиотек. Звук грузится только после первого нажатия. Джоги — скретч.
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -311,7 +311,6 @@ export function MixConsole() {
           <defs>
             <radialGradient id="rim" cx="50%" cy="40%" r="60%"><stop offset="0" stopColor="#e9ecf2" /><stop offset=".55" stopColor="#9a9ea8" /><stop offset="1" stopColor="#4a4d56" /></radialGradient>
           </defs>
-          <rect x={2} y={2} width={996} height={436} rx={28} fill="var(--deck)" stroke="#33343f" strokeWidth={2} />
           <line x1={380} y1={16} x2={380} y2={424} stroke="#0b0c12" strokeWidth={3} />
           <line x1={620} y1={16} x2={620} y2={424} stroke="#0b0c12" strokeWidth={3} />
           {deck("A", 0, "#6f6bff", "LOBODA feat. PHARAOH — BOOM BOOM")}

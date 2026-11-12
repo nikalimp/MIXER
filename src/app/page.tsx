@@ -3,6 +3,7 @@ import { home } from "@/content/home";
 import { site } from "@/content/site";
 import { materials } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
+import { ScrollFill } from "@/components/scroll-fill";
 import { LeadForm } from "@/components/lead-form";
 import { FaqList } from "@/components/faq";
 import { JsonLd } from "@/components/json-ld";
@@ -31,16 +32,20 @@ export default function Home() {
         {site.features.mixGame && <MixConsole />}
       </section>
 
-      {/* О школе — вариант A «Манифест + коллаж» (v0.3) */}
+      {/* О школе — манифест с заполнением по скроллу, цифры в той же плитке, коллаж (v0.4) */}
       <section className="sec" id="about" aria-labelledby="about-h">
         <div className="tile tile-white about-main reveal">
           <p className="eyebrow">О школе</p>
-          <h2 id="about-h" className="h2 about-manifest">{home.about.manifest}</h2>
+          <ScrollFill id="about-h" className="h2 about-manifest" text={home.about.manifest} />
           <div className="about-body">
             <p className="lead-text">{home.answer}</p>
-            <div>
-              <h3 className="h3">{home.about.title}</h3>
-              <ul className="dash-list">{home.about.points.map((p) => <li key={p}>{p}</li>)}</ul>
+            <div className="about-stats">
+              {home.about.stats.map((st) => (
+                <div key={st.value} className="stat">
+                  <p className="stat-value">{st.value}</p>
+                  <p className="stat-label">{st.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -50,14 +55,6 @@ export default function Home() {
               <img src={sl.src} alt={sl.alt} width={900} height={1125} loading="lazy" decoding="async" />
             </figure>
           ))}
-          <div className="tile tile-black collage-stats">
-            {home.about.stats.map((st) => (
-              <div key={st.value} className="stat">
-                <p className="stat-value">{st.value}</p>
-                <p className="stat-label">{st.label}</p>
-              </div>
-            ))}
-          </div>
           <div className="tile tile-blue collage-cta">
             <p className="h3">{home.about.cta.title}</p>
             <a href="#top" className="btn btn-light">{home.about.cta.button}</a>
