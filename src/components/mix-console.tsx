@@ -100,11 +100,15 @@ export function MixConsole() {
     const g = d.gain?.gain, t = now(); if (!g) return;
     g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(to, t + len);
   };
-  const reverse = (ctx: AudioContext, buf: AudioBuffer) => {
-    const out = ctx.createBuffer(buf.numberOfChannels, buf.length, buf.sampleRate);
+  // Обратная копия трека для скретча назад. Считается кусками по ~8 мс между кадрами — не блокирует страницу (PageSpeed TBT).
+  const reverse = async (ctx: AudioContext, buf: AudioBuffer) => {
+    const out = ctx.createBuffer(buf.numberOfChannels, buf.length, buf.sampleRate), STEP = 120000;
     for (let c = 0; c < buf.numberOfChannels; c++) {
-      const a = buf.getChannelData(c), b = out.getChannelData(c);
-      for (let i = 0, n = a.length; i < n; i++) b[i] = a[n - 1 - i];
+      const a = buf.getChannelData(c), b = out.getChannelData(c), n = a.length;
+      for (let i = 0; i < n; i += STEP) {
+        for (let k = i, e = Math.min(n, i + STEP); k < e; k++) b[k] = a[n - 1 - k];
+        await new Promise((r) => setTimeout(r, 0));
+      }
     }
     return out;
   };
@@ -190,7 +194,8 @@ export function MixConsole() {
       const load = async (u: string) => ctx.decodeAudioData(await (await fetch(u)).arrayBuffer());
       const [a, b] = await Promise.all([load(TRACKS.A), load(TRACKS.B)]);
       const { A, B } = decks.current;
-      A.buffer = a; B.buffer = b; A.rev = reverse(ctx, a); B.rev = reverse(ctx, b);
+      A.buffer = a; B.buffer = b;
+      reverse(ctx, a).then((r) => { A.rev = r; }).then(() => reverse(ctx, b)).then((r) => { B.rev = r; }).catch(() => {});
       [A, B].forEach((d) => { d.gain = ctx.createGain(); d.gain.gain.value = 0; d.gain.connect(master); });
     })().catch((e) => { loadRef.current = null; ctxRef.current?.close().catch(() => {}); ctxRef.current = null; throw e; });
     return loadRef.current;
@@ -237,10 +242,10 @@ export function MixConsole() {
 
   /* ---------- Скретч: короткая «гранула» трека вперёд или назад со скоростью руки ---------- */
   const grain = (d: Deck, from: number, v: number, dt: number) => {
-    const ctx = ctxRef.current, fx = fxRef.current; if (!ctx || !fx || !d.buffer || !d.rev) return;
+    const ctx = ctxRef.current, fx = fxRef.current; if (!ctx || !fx || !d.buffer || (v < 0 && !d.rev)) return;
     const rate = Math.min(Math.abs(v), 4); if (rate <= 0.05) return;
     const src = ctx.createBufferSource(), g = ctx.createGain(), n = ctx.currentTime, len = Math.max(dt, 0.025);
-    src.buffer = v > 0 ? d.buffer : d.rev; src.playbackRate.value = rate;
+    src.buffer = v > 0 ? d.buffer : d.rev!; src.playbackRate.value = rate;
     g.gain.setValueAtTime(0, n); g.gain.linearRampToValueAtTime(1, n + 0.004);
     g.gain.setValueAtTime(1, n + len - 0.006); g.gain.linearRampToValueAtTime(0, n + len);
     src.connect(g).connect(fx);
