@@ -201,7 +201,7 @@ export function MixConsole() {
       const [a, b] = await Promise.all([load(TRACKS.A), load(TRACKS.B)]);
       const { A, B } = decks.current;
       A.buffer = a; B.buffer = b;
-      reverse(ctx, a).then((r) => { A.rev = r; }).then(() => reverse(ctx, b)).then((r) => { B.rev = r; }).catch(() => {});
+      // обратные копии — не при загрузке, а при первом скретче (ensureRev)
       [A, B].forEach((d) => { d.gain = ctx.createGain(); d.gain.gain.value = 0; d.gain.connect(master); });
     })().catch((e) => { loadRef.current = null; ctxRef.current?.close().catch(() => {}); ctxRef.current = null; throw e; });
     return loadRef.current;
@@ -246,9 +246,18 @@ export function MixConsole() {
     else if (ph === "won") { goal("mix_cta"); setDialog(true); }
   };
 
+  const revStarted = useRef(false);
+  const ensureRev = () => {
+    const ctx = ctxRef.current, { A, B } = decks.current;
+    if (revStarted.current || !ctx || !A.buffer || !B.buffer) return;
+    revStarted.current = true;
+    reverse(ctx, A.buffer).then((r) => { A.rev = r; }).then(() => reverse(ctx, B.buffer!)).then((r) => { B.rev = r; }).catch(() => { revStarted.current = false; });
+  };
+
   /* ---------- Скретч: короткая «гранула» трека вперёд или назад со скоростью руки ---------- */
   const grain = (d: Deck, from: number, v: number, dt: number) => {
-    const ctx = ctxRef.current, fx = fxRef.current; if (!ctx || !fx || !d.buffer || (v < 0 && !d.rev)) return;
+    const ctx = ctxRef.current, fx = fxRef.current; if (!ctx || !fx || !d.buffer) return;
+    ensureRev(); if (v < 0 && !d.rev) return;
     const rate = Math.min(Math.abs(v), 4); if (rate <= 0.05) return;
     const src = ctx.createBufferSource(), g = ctx.createGain(), n = ctx.currentTime, len = Math.max(dt, 0.025);
     src.buffer = v > 0 ? d.buffer : d.rev!; src.playbackRate.value = rate;
