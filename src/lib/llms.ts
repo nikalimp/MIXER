@@ -49,7 +49,7 @@ export function llmsFullTxt() {
 # В школе ты
 ${home.about.points.map((p) => `- ${p}`).join("\n")}
 
-${home.about.stats.map((s) => `${s.value} — ${s.label}`).join(". ")}.
+${home.about.stats.map((s) => `${s.value} ${s.label}`).join(", ")}.
 
 # Курсы подробно
 ${home.courses.map((c) => `## Курс «${c.name}»\n${c.forWhom}. ${c.text}\n${c.specs.join(", ")}${c.extra ? `; ${c.extra}` : ""}.`).join("\n\n")}

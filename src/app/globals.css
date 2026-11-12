@@ -93,7 +93,7 @@
 /* ---------- Пульт ---------- */
 .mix { margin-top: clamp(20px, 3vw, 48px); }
 .mix-hint { min-height: 3.2em; max-width: 64ch; margin: 0 auto 14px; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; display: flex; align-items: center; justify-content: center; }
-.mix-svg { width: 100%; height: auto; display: block; font-family: var(--font-sans); user-select: none; -webkit-user-select: none; border-radius: clamp(10px, 2.8vw, 28px); box-shadow: 0 24px 40px oklch(0 0 0 / 0.3); }
+.mix-svg { width: 100%; height: auto; display: block; max-width: max(320px, calc((100svh - 300px) * 2.2727)); margin-inline: auto; font-family: var(--font-sans); user-select: none; -webkit-user-select: none; border-radius: clamp(10px, 2.8vw, 28px); box-shadow: 0 24px 40px oklch(0 0 0 / 0.3); }
 .mix-svg [tabindex]:focus { outline: none; }
 .mix-svg [tabindex]:focus-visible { outline: 3px solid var(--accent); }
 .mix-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
@@ -124,8 +124,8 @@
 .dash-list li { padding-left: 22px; position: relative; }
 .dash-list li::before { content: "—"; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
 .stat { display: flex; flex-direction: column; justify-content: flex-end; min-height: 160px; }
-.stat-value { font-size: clamp(32px, 4vw, 64px); font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.03em; }
-.stat-label { margin-top: 6px; font-size: 14px; opacity: 0.75; }
+.stat-value { font-size: clamp(44px, 5vw, 96px); font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: -0.03em; }
+.stat-label { margin-top: 6px; font-size: clamp(14px, 1.2vw, 18px); font-weight: 700; text-transform: uppercase; opacity: 0.85; }
 .about-cta { display: flex; flex-direction: column; gap: 14px; justify-content: flex-end; min-height: 220px; }
 .about-cta .btn { align-self: flex-start; }
 
@@ -164,8 +164,9 @@
 /* ---------- Кто и на чём учит ---------- */
 @media (min-width: 768px) { .teacher { grid-column: span 4; } .equipment { grid-column: span 12; } }
 .teacher { display: flex; flex-direction: column; gap: 14px; }
-@media (min-width: 1200px) { .teacher { flex-direction: row; align-items: center; gap: 20px; } .teacher img { width: 42%; flex: 0 0 42%; } }
+@media (min-width: 1200px) { .teacher { flex-direction: row; align-items: center; gap: 20px; } }
 .teacher img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: calc(var(--radius) - 8px); filter: grayscale(1); }
+@media (min-width: 1200px) { .teacher img { width: 42%; flex: 0 0 42%; } .teacher > div { min-width: 0; } }
 .teacher-years { font-size: clamp(24px, 2.4vw, 36px); font-weight: 900; line-height: 1; margin-top: 4px; }
 .teacher-years span { display: block; font-size: 12px; font-weight: 500; opacity: 0.7; margin-top: 4px; }
 .equipment .h3 { margin-bottom: 16px; }
@@ -210,7 +211,7 @@
   .socials { grid-column: 1 / span 4; } .reviews { grid-column: 10 / span 3; grid-row: 1 / span 2; }
 }
 .addr { display: flex; flex-direction: column; gap: 6px; }
-.addr-main { font-size: clamp(28px, 3.4vw, 56px); font-weight: 900; text-transform: uppercase; line-height: 1; }
+.addr-main { font-size: clamp(26px, 2.5vw, 56px); font-weight: 900; text-transform: uppercase; line-height: 1; }
 .addr-sub { font-size: clamp(16px, 1.4vw, 22px); font-weight: 800; text-transform: uppercase; }
 .addr .btn { margin-top: auto; align-self: flex-start; }
 .addr .btn { margin-top: 16px; }
@@ -224,7 +225,7 @@
 /* ---------- Форма ---------- */
 .form-tile { display: grid; gap: clamp(20px, 3vw, 48px); }
 @media (min-width: 1024px) { .form-tile { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; } }
-.form-tile .h2 { font-size: clamp(26px, 3.4vw, 52px); }
+.form-tile .h2 { font-size: clamp(24px, 2.6vw, 52px); }
 .form-tile .lead-text { margin-top: 16px; }
 .lead { display: grid; gap: 14px; }
 .lead-grid { display: grid; gap: 12px; }

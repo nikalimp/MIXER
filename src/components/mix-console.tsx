@@ -213,6 +213,11 @@ export function MixConsole() {
     [A, B].forEach((d) => { stopSrc(d); d.playing = false; d.scratching = false; d.pos = 0; d.rate = 1; d.ramp = null; });
     xfRef.current = 0; applyGains();
     setPhaseBoth("playing"); goal("mix_start");
+    // Таймер и кроссфейдер должны быть видны одновременно: если пульт не целиком на экране — показать его
+    const r = svg.current?.getBoundingClientRect();
+    if (r && (r.top < 0 || r.bottom > window.innerHeight - 90)) {
+      svg.current?.closest(".mix")?.scrollIntoView({ block: "center", behavior: reduced.current ? "auto" : "smooth" });
+    }
     setHint("Играет LOBODA. Переведи кроссфейдер на B на словах «boom\u00A0boom» — следи за таймером.");
     play(A);
     loop();
