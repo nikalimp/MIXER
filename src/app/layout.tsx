@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/unbounded/wght.css"; // Unbounded — заголовки, кнопки, цифры (decisions 2026-11-11)
-import "@fontsource-variable/onest/wght.css"; // Onest — основной текст (Ник, v0.3: читаемость)
+// Шрифты OFL локально из public/fonts (@font-face в globals.css); все четыре файла предзагружаются (пробелы и «» — в латинском файле), запасной шрифт подогнан по метрикам — без сдвига вёрстки (PageSpeed, v0.6)
 import "./globals.css";
 import { site } from "@/content/site";
 import { SiteHeader } from "@/components/site-header";
@@ -27,6 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={site.lang} suppressHydrationWarning>
       <head>
+        <link rel="preload" href="/fonts/onest-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/unbounded-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/onest-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="" />
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         {site.metrikaId > 0 && <script dangerouslySetInnerHTML={{ __html: metrikaScript(site.metrikaId) }} />}
         <JsonLd data={graph(websiteSchema, orgSchema)} />
