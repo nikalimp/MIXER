@@ -1,5 +1,5 @@
-// Единый источник правды о компании. Заполняется по specs/00-brief.md и specs/02-spec.md.
-// Всё, что помечено TODO(клиент), должно быть заменено фактами до запуска: `npm run check` не пропустит TODO.
+// Единый источник правды о школе. Факты — из specs/00-transfer-audit.md, specs/02-spec.md и decisions.md.
+// Неизвестное — пустое значение и комментарий TODO(клиент): блок на сайте не показывается, пока факта нет.
 
 export type OrgType =
   | "Organization"
@@ -13,72 +13,83 @@ export type OrgType =
   | "Store";
 
 export const site = {
-  url: "https://example.ru", // TODO(клиент): боевой домен без слеша на конце
-  name: "TODO(клиент): Бренд",
-  legalName: "TODO(клиент): ООО «Название»",
-  // Тип организации в Schema.org — самый точный из подходящих: https://schema.org/LocalBusiness#subtypes
-  orgType: "LocalBusiness" as OrgType,
-  title: "TODO(клиент): Бренд — услуга в городе", // title главной, до 60 символов
-  description: "TODO(клиент): описание компании для поиска и нейросетей, 120⁠–⁠160 символов, с фактами: что, где, для кого, цена или срок.",
-  // Одна фраза о компании для llms.txt и футера
-  tagline: "TODO(клиент): что делаем и для кого",
+  // Тестовый адрес. Боевой домен школы — Ник сообщит (requests.md §1.2); при переезде заменить здесь, в publish и workflow.
+  url: "https://mixer.nikalimp.ru",
+  name: "MIXER",
+  brandLine: "MIXER by СТАЯ",
+  legalName: "", // TODO(клиент): ООО / ИП для политики ПДн и футера
+  orgType: "EducationalOrganization" as OrgType,
+  title: "Школа диджеинга в Екатеринбурге — MIXER by СТАЯ",
+  description:
+    "Школа диджеинга MIXER в Екатеринбурге: курсы с нуля, «Левел ап», «Миксмастер» и парный. Учат резиденты «СТАЯ» на CDJ-2000NXS2 и DJM-900NXS2.",
+  tagline: "Школа диджеинга в Екатеринбурге от действующих резидентов творческого объединения «СТАЯ»",
   lang: "ru",
   locale: "ru_RU",
-  foundingYear: 2015, // TODO(клиент)
-  areaServed: ["RU"],
+  foundingYear: 0, // TODO(клиент): год основания (на сайте — «4 года обучаем»)
+  areaServed: ["Екатеринбург"],
 
   contacts: {
-    phone: "", // формат +7XXXXXXXXXX; пусто — блок не показывается
+    phone: "", // TODO(клиент)
     phoneDisplay: "",
-    email: "",
-    telegram: "", // https://t.me/…
-    whatsapp: "", // https://wa.me/7XXXXXXXXXX
+    email: "", // TODO(клиент)
+    telegram: "https://t.me/mixerdjschoolekb",
+    whatsapp: "",
     address: {
-      street: "",
-      city: "",
-      region: "",
+      street: "Восточная улица, 56, 3 этаж, офис 304",
+      streetShort: "Восточная 56",
+      floor: "3 этаж, офис 304",
+      city: "Екатеринбург",
+      region: "Свердловская область",
       postalCode: "",
       country: "RU",
     },
-    geo: null as null | { lat: number; lng: number },
-    hours: "", // для людей: «Пн–Пт 9:00–19:00»
-    openingHours: [] as { days: string[]; opens: string; closes: string }[], // для Schema: days — Monday…Sunday
+    geo: { lat: 56.842437, lng: 60.631481 } as null | { lat: number; lng: number },
+    yandexOrgId: "162551378144",
+    yandexOrgUrl: "https://yandex.ru/maps/org/mikser/162551378144/",
+    hours: "", // TODO(клиент): часы работы
+    openingHours: [] as { days: string[]; opens: string; closes: string }[],
   },
 
-  // Главное целевое действие — на него ведут все CTA
-  cta: {
-    label: "TODO(клиент): Записаться",
-    href: "https://t.me/TODO", // TODO(клиент): ссылка на мессенджер, форму или tel:
-  },
+  cta: { label: "Записаться", href: "#form" },
 
-  // Реквизиты для футера и политики ПДн (152-ФЗ)
   legal: {
-    inn: "TODO(клиент)",
-    ogrn: "TODO(клиент)",
-    privacyEmail: "", // почта для запросов по персональным данным; пусто — берётся contacts.email
+    inn: "", // TODO(клиент)
+    ogrn: "", // TODO(клиент)
+    privacyEmail: "",
   },
 
-  // Профили бренда на внешних площадках: одинаковые название, адрес и телефон везде
-  sameAs: [] as string[],
-  socials: [] as { label: string; href: string }[], // Instagram и Facebook — с «*» в label
-  metaNote: "", // «*Meta Platforms Inc. признана экстремистской и запрещена в РФ» — если есть ссылки на Instagram/Facebook
+  sameAs: [
+    "https://t.me/mixerdjschoolekb",
+    "https://vk.com/mixerdjschoolekb",
+    "https://www.instagram.com/mixer_djschool",
+    "https://yandex.ru/maps/org/mikser/162551378144/",
+  ],
+  socials: [
+    { label: "Telegram", href: "https://t.me/mixerdjschoolekb" },
+    { label: "ВКонтакте", href: "https://vk.com/mixerdjschoolekb" },
+    { label: "Instagram*", href: "https://www.instagram.com/mixer_djschool" },
+  ],
+  metaNote: "*Instagram принадлежит компании Meta Platforms Inc., деятельность которой признана экстремистской и запрещена в РФ.",
+  parent: { name: "СТАЯ", url: "https://stayaekb.ru" },
 
-  // Лицо компании — основатель или эксперт. null, если не нужен
   person: null as null | { name: string; jobTitle: string; description: string; sameAs: string[] },
 
-  metrikaId: 0, // номер счётчика Яндекс Метрики; 0 — счётчик не подключается (на боевом домене npm run check этого не пропустит)
-  darkTheme: true, // переключатель темы в шапке
+  // Метрика школы 99510129 подключается после выкладки на домен школы (стандарт §9.0); на тесте — 0.
+  metrikaId: 0,
+  darkTheme: false,
 
-  // Функции включаются и выключаются флагами, а не удалением кода (стандарт §1.9):
-  // снятый с сайта блок остаётся в репозитории и возвращается одной строкой.
   features: {
-    blog: true, // блог: пункт меню, /blog/, статьи в sitemap и llms.txt
+    blog: false,
+    mixGame: true, // игра «Сведи трек» в hero (spec §7.1)
+    materials: true, // раздел «Полезное» (spec §7.2)
   },
 };
 
 export const nav = [
-  { href: "/services/", label: "Услуги" },
-  ...(site.features.blog ? [{ href: "/blog/", label: "Блог" }] : []),
-  { href: "/about/", label: "О компании" },
-  { href: "/contacts/", label: "Контакты" },
+  { href: "/#about", label: "О школе" },
+  { href: "/#courses", label: "Курсы" },
+  { href: "/#team", label: "Преподаватели" },
+  { href: "/#studio", label: "Услуги" },
+  ...(site.features.materials ? [{ href: "/#materials", label: "Полезное" }] : []),
+  { href: "/#contacts", label: "Контакты" },
 ];

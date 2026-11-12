@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
-import { Container, Section } from "@/components/container";
 
 export const metadata: Metadata = {
   title: "Согласие на обработку персональных данных",
-  description: `Текст согласия на обработку персональных данных, которое посетитель даёт ${site.name}, отправляя форму на сайте.`,
+  description: `Текст согласия на обработку персональных данных, которое посетитель даёт ${site.brandLine}, отправляя форму на сайте.`,
   alternates: { canonical: "/consent/" },
   robots: { index: false, follow: true },
 };
@@ -13,13 +12,15 @@ export const metadata: Metadata = {
 // не внутри политики и не одной галочкой с офертой. Эта страница — отдельный документ, на неё ведёт чекбокс
 // <ConsentCheckbox /> у каждой формы. Перед запуском — сверить цели и состав данных с реальными формами клиента.
 export default function Consent() {
-  const email = site.legal.privacyEmail || site.contacts.email || "TODO(клиент): почта для запросов по ПДн";
+  const operator = site.legalName || "школа диджеинга MIXER (творческое объединение «СТАЯ»)"; // TODO(клиент): юрлицо, ИНН, ОГРН
+  const req = [site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `ОГРН ${site.legal.ogrn}`].filter(Boolean).join(", ");
+  const contact = site.legal.privacyEmail || site.contacts.email || `сообщение в Telegram ${site.contacts.telegram}`;
   return (
-    <Section className="pt-12">
-      <Container className="max-w-3xl">
-        <h1 className="text-3xl font-semibold tracking-tight">Согласие на обработку персональных данных</h1>
+    <section className="legal">
+      <a href="/" className="back">← На главную</a>
+        <h1>Согласие на обработку персональных данных</h1>
         <div className="prose-site mt-8">
-          <p>Отправляя форму на сайте {site.url}, я свободно, своей волей и в своём интересе даю согласие {site.legalName} (ИНН {site.legal.inn}, ОГРН {site.legal.ogrn}) на обработку моих персональных данных на условиях ниже.</p>
+          <p>Отправляя форму на сайте {site.url}, я свободно, своей волей и в своём интересе даю согласие {operator}{req && ` (${req})`} на обработку моих персональных данных на условиях ниже.</p>
           <h2>Какие данные</h2>
           <p>Имя, номер телефона, адрес электронной почты и сведения, которые я укажу в сообщении.</p>
           <h2>Цель</h2>
@@ -27,10 +28,9 @@ export default function Consent() {
           <h2>Действия с данными</h2>
           <p>Сбор, запись, систематизация, накопление, хранение, уточнение, использование, удаление и уничтожение — с использованием средств автоматизации и без них.</p>
           <h2>Срок и отзыв</h2>
-          <p>Согласие действует до достижения цели обработки или до его отзыва. Отозвать согласие можно письмом на {email}.</p>
+          <p>Согласие действует до достижения цели обработки или до его отзыва. Отозвать согласие можно письмом на {contact}.</p>
           <p>Порядок обработки описан в <a href="/privacy-policy/">политике обработки персональных данных</a>.</p>
         </div>
-      </Container>
-    </Section>
+    </section>
   );
 }
