@@ -17,7 +17,7 @@
 - [x] T12 llms.txt, sitemap, JSON-LD (Course, FAQPage, EducationalOrganization)
 
 ## Выкладка
-- [ ] T13 Сайт mixer.nikalimp.ru в ISPmanager, A-запись, SSL, FTP, секреты GitHub — Ник (`deploy-kit/setup-site.sh`)
+- [x] T13 Сайт mixer.nikalimp.ru в ISPmanager, A-запись, SSL, FTP, секреты GitHub — Ник (`deploy-kit/setup-site.sh`)
 - [ ] T14 `www/lead-config.php` на сервере: токен бота и chat_id школы — Ник / клиент
 - [ ] T15 Тестовая заявка из формы и из игры — проверка: сообщение в Telegram
 - [ ] T16 Проверка на iPhone Safari и Android Chrome: звук, скретч пальцем, «Свести на B»
@@ -40,3 +40,4 @@
 ## Журнал
 - 2026-11-12 — T01–T12: сборка v0.2, `npm run check` пройден (geo-check 9,6/10).
 - 2026-11-12 — PR #2 слит Ником, выложено на https://mixer.nikalimp.ru (PageSpeed mobile 82, TBT 720 мс). T22 — исправление производительности.
+- 2026-11-12 — T13 готов (Ник), выкладка PR #2; T22–T24 — PageSpeed mobile 84 → 99.
