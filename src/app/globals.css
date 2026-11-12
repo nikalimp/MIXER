@@ -90,7 +90,7 @@
 /* ---------- Пульт ---------- */
 .mix { margin-top: clamp(20px, 3vw, 48px); }
 .mix-hint { min-height: 3.2em; max-width: 64ch; margin: 0 auto 14px; font-size: clamp(13px, 1.1vw, 16px); font-weight: 500; display: flex; align-items: center; justify-content: center; }
-.mix-svg { width: 100%; height: auto; display: block; font-family: var(--font-sans); user-select: none; -webkit-user-select: none; filter: drop-shadow(0 24px 40px oklch(0 0 0 / 0.3)); }
+.mix-svg { width: 100%; height: auto; display: block; font-family: var(--font-sans); user-select: none; -webkit-user-select: none; border-radius: clamp(10px, 2.8vw, 28px); box-shadow: 0 24px 40px oklch(0 0 0 / 0.3); }
 .mix-svg [tabindex]:focus { outline: none; }
 .mix-svg [tabindex]:focus-visible { outline: 3px solid var(--accent); }
 .mix-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
