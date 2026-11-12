@@ -1,6 +1,8 @@
 // Контент главной. Блоки — по specs/02-spec.md §5. Тексты старого сайта — с правками Ника v0.2 (грамматика, ё, структура курсов).
 
 export type Faq = { q: string; a: string };
+export type Hotspot = { label: string; text: string; x: number; y: number; side: "l" | "r" };
+export type Equipment = { name: string; kind: string; photo: string; hotspots?: Hotspot[] };
 
 export const home = {
   h1: "Школа диджеинга в Екатеринбурге",
@@ -85,11 +87,22 @@ export const home = {
   ],
 
   equipment: [
-    { name: "CDJ-2000NXS2", kind: "Плееры", photo: "/img/eq-cdj-2000nxs2.webp" },
+    {
+      name: "CDJ-2000NXS2", kind: "Плееры", photo: "/img/eq-cdj-2000nxs2.webp",
+      // Подсказки на фото (v1.0): x, y — % от квадратного фото; side — куда открывается подсказка
+      hotspots: [
+        { label: "Экран", text: "показывает волну трека, BPM и время до конца.", x: 50, y: 17, side: "r" },
+        { label: "Hot Cue", text: "мгновенно переносит к сохранённым точкам трека.", x: 16, y: 32, side: "r" },
+        { label: "Джог", text: "край подгоняет темп, верхняя часть — для скретча.", x: 50, y: 65, side: "r" },
+        { label: "Темп", text: "фейдер меняет скорость трека, чтобы BPM совпал с соседним.", x: 84, y: 77, side: "l" },
+        { label: "Cue", text: "ставит точку старта: держишь — играет, отпустил — вернулся к точке.", x: 16, y: 82, side: "r" },
+        { label: "Play/Pause", text: "запускает и останавливает трек.", x: 16, y: 94, side: "r" },
+      ],
+    },
     { name: "DJM-900NXS2", kind: "Микшер", photo: "/img/eq-djm-900nxs2.webp" },
     { name: "XDJ-RX3", kind: "DJ-система", photo: "/img/eq-xdj-rx3.webp" },
     { name: "DDJ XP2", kind: "Контроллер", photo: "/img/eq-ddj-xp2.webp" },
-  ],
+  ] as Equipment[],
 
   services: [
     { name: "Разовое занятие", price: "3500 ₽/час", note: "" },

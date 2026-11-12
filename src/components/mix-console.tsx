@@ -179,12 +179,14 @@ export function MixConsole() {
   // Треки грузятся заранее, после загрузки страницы (Ник, v0.7): к нажатию «Начать» они уже готовы.
   // AudioContext без жеста пользователя создаётся «на паузе» — декодировать можно, играть начнём после resume() по нажатию.
   const loadRef = useRef<Promise<void> | null>(null);
+  const fxRef = useRef<GainNode | null>(null); // скретч идёт сюда, мимо громкости деки — слышен и до старта игры
   const ensureLoaded = useCallback(() => {
     if (loadRef.current) return loadRef.current;
     loadRef.current = (async () => {
       const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       const ctx = new AC(); ctxRef.current = ctx;
       const master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+      const fx = ctx.createGain(); fx.gain.value = 0.8; fx.connect(master); fxRef.current = fx;
       const load = async (u: string) => ctx.decodeAudioData(await (await fetch(u)).arrayBuffer());
       const [a, b] = await Promise.all([load(TRACKS.A), load(TRACKS.B)]);
       const { A, B } = decks.current;
@@ -233,6 +235,18 @@ export function MixConsole() {
     else if (ph === "won") { goal("mix_cta"); setDialog(true); }
   };
 
+  /* ---------- Скретч: короткая «гранула» трека вперёд или назад со скоростью руки ---------- */
+  const grain = (d: Deck, from: number, v: number, dt: number) => {
+    const ctx = ctxRef.current, fx = fxRef.current; if (!ctx || !fx || !d.buffer || !d.rev) return;
+    const rate = Math.min(Math.abs(v), 4); if (rate <= 0.05) return;
+    const src = ctx.createBufferSource(), g = ctx.createGain(), n = ctx.currentTime, len = Math.max(dt, 0.025);
+    src.buffer = v > 0 ? d.buffer : d.rev; src.playbackRate.value = rate;
+    g.gain.setValueAtTime(0, n); g.gain.linearRampToValueAtTime(1, n + 0.004);
+    g.gain.setValueAtTime(1, n + len - 0.006); g.gain.linearRampToValueAtTime(0, n + len);
+    src.connect(g).connect(fx);
+    src.start(n, Math.max(0, v > 0 ? from : d.buffer.duration - from), len * rate + 0.01);
+  };
+
   /* ---------- Джоги: скретч ---------- */
   useEffect(() => {
     reduced.current = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -257,25 +271,28 @@ export function MixConsole() {
         last = ang(e); lastT = performance.now();
       });
       on(jog, "pointermove", (e) => {
-        const ctx = ctxRef.current; if (!d.scratching || !ctx || !d.buffer || !d.rev || !d.gain) return;
+        if (!d.scratching || !ctxRef.current || !d.buffer) return;
         const a = ang(e), t = performance.now();
         let da = a - last; if (da > Math.PI) da -= 2 * Math.PI; if (da < -Math.PI) da += 2 * Math.PI;
         const dt = Math.max((t - lastT) / 1000, 0.008), dSec = (da / (2 * Math.PI)) * SEC_PER_REV, from = d.pos;
         d.pos = clampPos(d, d.pos + dSec);
-        const v = dSec / dt, rate = Math.min(Math.abs(v), 4);
-        if (rate > 0.05) {
-          const src = ctx.createBufferSource(), g = ctx.createGain(), n = ctx.currentTime, len = Math.max(dt, 0.025);
-          src.buffer = v > 0 ? d.buffer : d.rev; src.playbackRate.value = rate;
-          g.gain.setValueAtTime(0, n); g.gain.linearRampToValueAtTime(1, n + 0.004);
-          g.gain.setValueAtTime(1, n + len - 0.006); g.gain.linearRampToValueAtTime(0, n + len);
-          src.connect(g).connect(d.gain);
-          src.start(n, Math.max(0, v > 0 ? from : d.buffer.duration - from), len * rate + 0.01);
-        }
+        grain(d, from, dSec / dt, dt);
         last = a; lastT = t; draw();
       });
       const up = () => { if (!d.scratching) return; d.scratching = false; if (d.wasPlaying) play(d); };
       on(jog, "pointerup", up); on(jog, "pointercancel", up);
     });
+    // Пасхалка (v1.0): скретч логотипа MIXER на первом экране — событие от HeroLogo, звук с деки A около «boom boom»
+    let logoPos = MIX_AT - 1;
+    const onLogo = (e: Event) => {
+      const { dSec, dt } = (e as CustomEvent<{ dSec: number; dt: number }>).detail;
+      const A = decks.current.A; if (!A.buffer || phaseRef.current === "playing") return;
+      ctxRef.current?.resume();
+      const from = logoPos; logoPos = clampPos(A, logoPos + dSec);
+      grain(A, from, dSec / dt, dt);
+    };
+    window.addEventListener("mixer:scratch", onLogo);
+    off.push(() => window.removeEventListener("mixer:scratch", onLogo));
     const onKey = (e: KeyboardEvent) => {
       const tag = (document.activeElement?.tagName ?? "").toUpperCase();
       if (e.code === "Space" && phaseRef.current === "playing" && !["INPUT", "TEXTAREA", "BUTTON", "A", "SELECT"].includes(tag)) { e.preventDefault(); mix(); }

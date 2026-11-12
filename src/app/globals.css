@@ -283,7 +283,7 @@
   .reveal-stagger > :nth-child(6) { transition-delay: .3s; } .reveal-stagger > :nth-child(7) { transition-delay: .36s; }
   .reveal-stagger > :nth-child(n+8) { transition-delay: .42s; }
   .reveal-stagger.done > * { transition-delay: 0s; transition-duration: .35s; }
-  .hero-logo { animation: hero-in 1s cubic-bezier(.2, .7, .2, 1) both; }
+  .hero-logo-wrap { animation: hero-in 1s cubic-bezier(.2, .7, .2, 1) both; }
   .hero-h1 { animation: hero-up .9s .15s cubic-bezier(.2, .7, .2, 1) both; }
   .hero-sub { animation: hero-up .9s .25s cubic-bezier(.2, .7, .2, 1) both; }
   .mix { animation: hero-up 1s .35s cubic-bezier(.2, .7, .2, 1) both; }
@@ -355,3 +355,24 @@
 
 /* Плавная прокрутка по якорям (v0.9); при «уменьшить движение» — без анимации */
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* ---------- Пасхалка: скретч логотипа (v1.0) ---------- */
+.hero-logo-wrap { touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.hero-logo-wrap.scratching { cursor: grabbing; }
+.hero-logo-wrap .hero-logo { transform: translateX(var(--shift, 0)) skewX(var(--skew, 0)); transition: transform .45s cubic-bezier(.3, 1.6, .5, 1); -webkit-user-drag: none; }
+.hero-logo-wrap.scratching .hero-logo { transition: transform .06s linear; }
+
+/* ---------- Подсказки на CDJ (v1.0): CSS, без JS; на телефоне — по нажатию (фокус) ---------- */
+.eq-ph { position: relative; }
+.eq:has(.hs) { overflow: visible; z-index: 1; }
+.hs { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; padding: 0; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 0 4px oklch(0.747 0.157 36.9 / 0.35); }
+.hs::before { content: "+"; display: grid; place-items: center; height: 100%; color: var(--ink); font: 800 14px/1 var(--font-display); }
+@media (prefers-reduced-motion: no-preference) { .hs { animation: hs-ping 2s ease-out infinite; } }
+@keyframes hs-ping { 0% { box-shadow: 0 0 0 0 oklch(0.747 0.157 36.9 / 0.6); } 70%, 100% { box-shadow: 0 0 0 12px oklch(0.747 0.157 36.9 / 0); } }
+.hs-tip { position: absolute; top: 50%; transform: translateY(-50%); width: max-content; max-width: min(220px, 60vw); padding: 10px 12px; border-radius: 12px; background: var(--ink); color: #fff; font: 400 12px/1.4 var(--font-sans); text-align: left; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; pointer-events: none; z-index: 5; box-shadow: 0 10px 30px oklch(0 0 0 / .3); }
+.hs-tip b { display: block; font-family: var(--font-display); font-size: 11px; text-transform: uppercase; color: var(--accent); margin-bottom: 2px; }
+.hs-r .hs-tip { left: calc(100% + 10px); }
+.hs-l .hs-tip { right: calc(100% + 10px); }
+.hs:hover .hs-tip, .hs:focus .hs-tip { opacity: 1; visibility: visible; }
+.hs:hover, .hs:focus { z-index: 6; }
+@media (max-width: 639px) { .hs:nth-of-type(2), .hs:nth-of-type(5) { display: none; } .hs { width: 18px; height: 18px; margin: -9px 0 0 -9px; } .hs::before { font-size: 12px; } }
