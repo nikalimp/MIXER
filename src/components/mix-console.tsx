@@ -100,18 +100,24 @@ export function MixConsole() {
     const g = d.gain?.gain, t = now(); if (!g) return;
     g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(to, t + len);
   };
-  // Обратная копия трека для скретча назад. Считается кусками по ~8 мс между кадрами — не блокирует страницу (PageSpeed TBT).
-  const reverse = async (ctx: AudioContext, buf: AudioBuffer) => {
-    const out = ctx.createBuffer(buf.numberOfChannels, buf.length, buf.sampleRate), STEP = 120000;
-    for (let c = 0; c < buf.numberOfChannels; c++) {
-      const a = buf.getChannelData(c), b = out.getChannelData(c), n = a.length;
-      for (let i = 0; i < n; i += STEP) {
+  // Обратная копия трека для скретча назад. Считается только в простое браузера (requestIdleCallback),
+  // маленькими порциями, пока у кадра есть свободное время — не создаёт длинных задач (PageSpeed TBT).
+  const reverse = (ctx: AudioContext, buf: AudioBuffer) => new Promise<AudioBuffer>((done) => {
+    const out = ctx.createBuffer(buf.numberOfChannels, buf.length, buf.sampleRate), n = buf.length, STEP = 8000;
+    let c = 0, i = 0;
+    const ric = (window as unknown as { requestIdleCallback?: (cb: (d: { timeRemaining: () => number }) => void) => number }).requestIdleCallback;
+    const work = (left: () => number) => {
+      const t0 = performance.now(); // не дольше 6 мс за раз: Lighthouse умножает длительность задач на замедление CPU
+      while (c < buf.numberOfChannels && left() > 3 && performance.now() - t0 < 6) {
+        const a = buf.getChannelData(c), b = out.getChannelData(c);
         for (let k = i, e = Math.min(n, i + STEP); k < e; k++) b[k] = a[n - 1 - k];
-        await new Promise((r) => setTimeout(r, 0));
+        i += STEP; if (i >= n) { i = 0; c++; }
       }
-    }
-    return out;
-  };
+      if (c >= buf.numberOfChannels) done(out); else next();
+    };
+    const next = () => ric ? ric((d) => work(() => d.timeRemaining())) : setTimeout(() => { const t = performance.now(); work(() => 12 - (performance.now() - t)); }, 30);
+    next();
+  });
 
   /* ---------- Кадр ---------- */
   const q = (sel: string) => svg.current?.querySelector(sel) as SVGElement | null;
