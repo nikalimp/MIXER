@@ -174,7 +174,7 @@
 .teacher-years { font-size: clamp(28px, 3vw, 48px); font-weight: 900; line-height: 1; margin-top: 10px; }
 .teacher-years span { display: block; font-size: 12px; font-weight: 500; opacity: 0.7; margin-top: 4px; font-family: var(--font-sans); }
 .eq-title { grid-column: 1 / -1; margin-top: clamp(12px, 2vw, 28px); }
-.eq { display: flex; flex-direction: column; gap: 4px; }
+.eq { display: flex; flex-direction: column; gap: 4px; grid-column: span 6; }
 .eq img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; margin-bottom: 8px; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
 .eq:hover img { transform: scale(1.05) rotate(-1deg); }
 .eq-kind { font-size: 11px; color: var(--muted-foreground); text-transform: uppercase; font-weight: 700; }
@@ -188,14 +188,14 @@
 .service-price.small { font-size: 16px; font-weight: 800; }
 
 /* ---------- Полезное ---------- */
-@media (min-width: 768px) { .mat { grid-column: span 4; } }
+@media (min-width: 640px) { .mat { grid-column: span 6; } }
+@media (min-width: 1024px) { .mat { grid-column: span 4; } }
 .mat { display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
 .mat .btn { margin-top: auto; align-self: flex-start; }
-.mat-empty { display: grid; gap: 10px; max-width: none; }
-.mat-empty p:last-child { max-width: 70ch; }
 
 /* ---------- FAQ ---------- */
-.faq { display: grid; gap: 8px; }
+.faq { display: grid; gap: 8px; align-items: start; }
+@media (min-width: 1024px) { .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .faq details { background: var(--card); border-radius: 18px; padding: 20px 24px; }
 .faq summary { display: flex; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; }
 .faq summary::-webkit-details-marker { display: none; }
@@ -204,26 +204,22 @@
 .faq details[open] summary span { transform: rotate(45deg); }
 .faq details p { margin-top: 10px; max-width: 70ch; }
 
-/* ---------- Контакты ---------- */
-@media (min-width: 768px) {
-  .addr { grid-column: span 5; } .map { grid-column: span 7; grid-row: span 2; }
-  .socials { grid-column: span 5; } .reviews { grid-column: span 12; }
-}
-@media (min-width: 1200px) {
-  .addr { grid-column: 1 / span 4; } .map { grid-column: 5 / span 5; grid-row: 1 / span 2; }
-  .socials { grid-column: 1 / span 4; } .reviews { grid-column: 10 / span 3; grid-row: 1 / span 2; }
-}
-.addr { display: flex; flex-direction: column; gap: 6px; }
-.addr-main { font-size: clamp(26px, 2.5vw, 56px); font-weight: 900; text-transform: uppercase; line-height: 1; }
+/* ---------- Контакты: адрес + плитки соцсетей (v0.5, без виджетов карты и отзывов) ---------- */
+@media (min-width: 640px) { .addr { grid-column: span 12; } .social { grid-column: span 4; } }
+@media (min-width: 1024px) { .addr { grid-column: 1 / span 6; grid-row: 1 / span 2; } .social-1 { grid-column: 7 / span 6; } .social-2 { grid-column: 7 / span 3; } .social-3 { grid-column: 10 / span 3; } }
+.addr { display: flex; flex-direction: column; gap: 6px; min-height: 280px; }
+.addr-main { font-size: clamp(30px, 4vw, 72px); font-weight: 900; text-transform: uppercase; line-height: 1; }
 .addr-sub { font-size: clamp(16px, 1.4vw, 22px); font-weight: 800; text-transform: uppercase; }
 .addr .btn { margin-top: auto; align-self: flex-start; }
-.addr .btn { margin-top: 16px; }
-.map { min-height: 360px; }
-.map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.socials ul { list-style: none; padding: 0; margin-top: 14px; display: grid; gap: 8px; }
-.socials a { font-weight: 800; text-transform: uppercase; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
-.reviews { display: flex; flex-direction: column; gap: 12px; min-height: 480px; }
-.reviews iframe { flex: 1; width: 100%; min-height: 420px; border: 0; border-radius: 12px; }
+.social { display: flex; flex-direction: column; gap: 4px; min-height: 180px; text-decoration: none; color: inherit; container-type: inline-size; }
+.social-1 { background: var(--primary); color: var(--primary-foreground); }
+.social-2 { background: var(--ink); color: #fff; }
+.social-3 { background: var(--card); }
+.social-name { margin-top: auto; font-family: var(--font-display); font-size: clamp(18px, 9.5cqi, 44px); overflow-wrap: normal; font-weight: 900; text-transform: uppercase; line-height: 1; }
+.social-handle { font-size: 14px; opacity: 0.75; }
+.social-arrow { position: absolute; top: clamp(16px, 2vw, 28px); right: clamp(16px, 2vw, 28px); font-size: clamp(24px, 2.4vw, 40px); line-height: 1; transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+.social:hover .social-arrow { transform: translate(4px, -4px); }
+.social:hover { transform: translateY(-4px); box-shadow: 0 18px 40px oklch(0 0 0 / 0.12); }
 
 /* ---------- Форма ---------- */
 .form-tile { display: grid; gap: clamp(20px, 3vw, 48px); }
@@ -306,5 +302,6 @@
 .legal { padding: clamp(28px, 4vw, 72px) var(--pad) 0; }
 .legal h1 { font-size: clamp(24px, 3.6vw, 48px); font-weight: 900; text-transform: uppercase; line-height: 1.05; max-width: 22ch; }
 .legal .back { display: inline-block; margin-bottom: 20px; font-size: 13px; text-decoration: underline; }
-.mat-howto { margin-top: var(--gap); display: grid; gap: 14px; }
-.mat-howto .dash-list { counter-reset: n; }
+.steps { list-style: none; padding: 0; counter-reset: st; display: grid; gap: 10px; font-size: 14px; }
+.steps li { counter-increment: st; position: relative; padding-left: 34px; }
+.steps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: oklch(1 0 0 / 0.18); font-family: var(--font-display); font-size: 12px; font-weight: 800; display: grid; place-items: center; }

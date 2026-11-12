@@ -9,6 +9,8 @@ ErrorDocument 404 /404.html
 RewriteEngine On
 # 301 переноса — сюда, по одному правилу на старый адрес (карта из specs/02-spec.md):
 # RewriteRule ^old-page/?$ /new-page/ [R=301,L]
+# v0.5: отдельной страницы «Полезное» больше нет — всё на главной
+RewriteRule ^materials/?$ /#materials [R=301,L,NE]
 </IfModule>
 
 <IfModule mod_headers.c>

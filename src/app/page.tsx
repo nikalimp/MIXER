@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { home } from "@/content/home";
 import { site } from "@/content/site";
-import { materials } from "@/content/materials";
+import { materials, materialsHowTo } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
 import { ScrollFill } from "@/components/scroll-fill";
 import { LeadForm } from "@/components/lead-form";
@@ -119,30 +119,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Полезное */}
-      {site.features.materials && (
+      {/* Полезное — всё на главной (v0.5) */}
+      {site.features.materials && materials.length > 0 && (
         <section className="sec" id="materials" aria-labelledby="mat-h">
-          <div className="sec-head">
-            <h2 id="mat-h" className="h2">Полезное</h2>
-            <a href="/materials/" className="btn btn-dark">Все материалы</a>
+          <h2 id="mat-h" className="h2 sec-title reveal">Полезное</h2>
+          <div className="bento bento-mat reveal-stagger">
+            {materials.map((m) => (
+              <article key={m.url} className="tile tile-white mat">
+                <p className="eyebrow">{m.type}{m.author ? ` · ${m.author}` : ""}</p>
+                <h3 className="h3">{m.title}</h3>
+                <p>{m.description}</p>
+                <a href={m.url} className="btn btn-primary" target="_blank" rel="noopener">{m.cta}</a>
+              </article>
+            ))}
+            <div className="tile tile-blue mat mat-howto">
+              <h3 className="h3">С чего начать</h3>
+              <ol className="steps">{materialsHowTo.map((t) => <li key={t}>{t}</li>)}</ol>
+            </div>
           </div>
-          {materials.length ? (
-            <div className="bento bento-mat reveal-stagger">
-              {materials.slice(0, 3).map((m) => (
-                <article key={m.url} className="tile tile-white mat">
-                  <p className="eyebrow">{m.type}</p>
-                  <h3 className="h3">{m.title}</h3>
-                  <p>{m.description}</p>
-                  <a href={m.url} className="btn btn-primary" target="_blank" rel="noopener">{m.cta}</a>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="tile tile-white mat-empty">
-              <p className="h3">Скоро здесь</p>
-              <p>Преподаватели MIXER собирают бесплатные материалы: сэмплы, пресеты, гайды и плейлисты. Первые материалы появятся в этом разделе, а анонсы — в нашем <a href={site.contacts.telegram}>Telegram</a>.</p>
-            </div>
-          )}
         </section>
       )}
 
@@ -163,18 +157,14 @@ export default function Home() {
             {site.contacts.hours && <p>{site.contacts.hours}</p>}
             <a className="btn btn-dark" href={site.contacts.yandexOrgUrl} target="_blank" rel="noopener">Маршрут в Яндекс Картах</a>
           </div>
-          <div className="tile tile-photo map">
-            <iframe loading="lazy" title="MIXER на карте: Екатеринбург, Восточная 56"
-              src={`https://yandex.ru/map-widget/v1/org/mikser/${site.contacts.yandexOrgId}/?ll=${site.contacts.geo!.lng}%2C${site.contacts.geo!.lat}&z=17`} />
-          </div>
-          <div className="tile tile-blue socials">
-            <p className="h3">Мы в соцсетях</p>
-            <ul>{site.socials.map((s) => <li key={s.href}><a href={s.href} target="_blank" rel="noopener me">{s.label}</a></li>)}</ul>
-          </div>
-          <div className="tile tile-white reviews">
-            <p className="h3">Отзывы</p>
-            <iframe loading="lazy" title="Отзывы о MIXER на Яндекс Картах" src={`https://yandex.ru/maps-reviews-widget/${site.contacts.yandexOrgId}?comments`} />
-          </div>
+          {site.socials.map((s, i) => (
+            <a key={s.href} className={`tile social social-${i + 1}`} href={s.href} target="_blank" rel="noopener me">
+              <span className="eyebrow">Мы в соцсетях</span>
+              <span className="social-name">{s.label}</span>
+              <span className="social-handle">@{s.href.replace(/\/$/, "").split("/").pop()}</span>
+              <span className="social-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
         </div>
       </section>
 
