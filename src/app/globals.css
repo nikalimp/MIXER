@@ -71,6 +71,9 @@
 /* ---------- Раскладка во всю ширину ---------- */
 .hero, .sec, .foot { padding-left: var(--pad); padding-right: var(--pad); }
 .sec { padding-top: clamp(28px, 4vw, 72px); }
+/* Секции ниже первого экрана не раскладываются, пока до них не доскроллили (PageSpeed, стандарт §6.6) */
+.sec { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+.foot { content-visibility: auto; contain-intrinsic-size: auto 160px; }
 .sec-title { margin-bottom: clamp(16px, 2vw, 28px); }
 .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(16px, 2vw, 28px); }
 .bento { display: grid; gap: var(--gap); grid-template-columns: repeat(12, minmax(0, 1fr)); }
