@@ -107,7 +107,7 @@ export default function Home() {
               <div className="eq-ph">
                 <img src={e.photo} alt={`Pioneer ${e.name}`} width={600} height={600} loading="lazy" />
                 {e.hotspots?.map((h) => (
-                  <button key={h.label} type="button" className={`hs hs-${h.side}`} style={{ left: `${12.5 + h.x * 0.75}%`, top: `${h.y}%` }} aria-label={h.label}>
+                  <button key={h.label} type="button" className={`hs hs-${h.side}${h.minor ? " hs-minor" : ""}`} style={{ left: `${12.5 + h.x * 0.75}%`, top: `${h.y}%` }} aria-label={h.label}>
                     <span className="hs-tip" role="tooltip"><b>{h.label}</b> {h.text}</span>
                   </button>
                 ))}
