@@ -306,6 +306,9 @@ export function MixConsole() {
   return (
     <div className="mix" ref={wrap}>
       <p className="mix-hint">Сведите ваш первый трек с&nbsp;точностью до&nbsp;1&nbsp;секунды и&nbsp;получите первое занятие бесплатно</p>
+      <div className="mix-board-wrap">
+      <img className="mix-sticker ms-1" src="/graffiti/sticker-1sec.svg" alt="" width={300} height={140} />
+      <img className="mix-sticker ms-2" src="/graffiti/sticker-noskip.svg" alt="" width={300} height={140} />
       <div className="mix-board">
         <svg ref={svg} viewBox="0 0 1000 440" className="mix-svg" role="group" aria-label="Пульт: игра «Сведи трек»">
           <defs>
@@ -314,7 +317,7 @@ export function MixConsole() {
           <line x1={380} y1={16} x2={380} y2={424} stroke="#0b0c12" strokeWidth={3} />
           <line x1={620} y1={16} x2={620} y2={424} stroke="#0b0c12" strokeWidth={3} />
           {deck("A", 0, "#6f6bff", "LOBODA feat. PHARAOH — BOOM BOOM")}
-          {deck("B", 620, "#FF8562", "SIDODGI, DUBOSHIT — BOOM")}
+          {deck("B", 638, "#FF8562", "SIDODGI, DUBOSHIT — BOOM")}
           <rect x={398} y={22} width={204} height={84} rx={10} fill="#060708" stroke="#2c2e3a" />
           <SevenSeg text={timer} x={412} y={42} h={46} on="#FF8562" off="#2a1a12" />
           <text x={500} y={140} fill={phase === "won" ? "#FF8562" : "#9a9ea8"} fontSize={11} fontWeight={700} textAnchor="middle">{status}</text>
@@ -324,6 +327,7 @@ export function MixConsole() {
           className={`mix-btn mix-btn-${phase}${pulse ? " mix-pulse" : ""}`} aria-describedby="mix-live">
           {LABEL[phase]}
         </button>
+      </div>
       </div>
       <p className="sr-only" id="mix-live" aria-live="polite">{live}</p>
       <LeadDialog open={dialog} onClose={() => setDialog(false)} />

@@ -4,6 +4,7 @@ import { site } from "@/content/site";
 import { materials, materialsHowTo } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
 import { ScrollFill } from "@/components/scroll-fill";
+import { FormFx } from "@/components/form-fx";
 import { LeadForm } from "@/components/lead-form";
 import { FaqList } from "@/components/faq";
 import { JsonLd } from "@/components/json-ld";
@@ -32,7 +33,7 @@ export default function Home() {
         {site.features.mixGame && <MixConsole />}
       </section>
 
-      {/* О школе — манифест с заполнением по скроллу, цифры в той же плитке, коллаж (v0.4) */}
+      {/* О школе — манифест с заполнением по скроллу, цифры в той же плитке, коллаж из 7 фото (v0.6) */}
       <section className="sec" id="about" aria-labelledby="about-h">
         <div className="tile tile-white about-main reveal">
           <p className="eyebrow">О школе</p>
@@ -40,8 +41,10 @@ export default function Home() {
           <div className="about-body">
             <p className="lead-text">{home.answer}</p>
             <div className="about-stats">
-              {home.about.stats.map((st) => (
-                <div key={st.value} className="stat">
+              {home.about.stats.map((st, k) => (
+                <div key={st.value} className={`stat stat-${k + 1}`}>
+                  {k === 0 && <img className="g g-crown" src="/graffiti/doodle-crown.svg" alt="" width={220} height={160} loading="lazy" />}
+                  {k === 1 && <img className="g g-circle" src="/graffiti/doodle-circle.svg" alt="" width={420} height={160} loading="lazy" />}
                   <p className="stat-value">{st.value}</p>
                   <p className="stat-label">{st.label}</p>
                 </div>
@@ -55,20 +58,19 @@ export default function Home() {
               <img src={sl.src} alt={sl.alt} width={900} height={1125} loading="lazy" decoding="async" />
             </figure>
           ))}
-          <div className="tile tile-blue collage-cta">
-            <p className="h3">{home.about.cta.title}</p>
-            <a href="#top" className="btn btn-light">{home.about.cta.button}</a>
-          </div>
         </div>
       </section>
 
       {/* Курсы */}
       <section className="sec" id="courses" aria-labelledby="courses-h">
-        <h2 id="courses-h" className="h2 sec-title reveal">Курсы</h2>
+        <div className="sec-title reveal g-wrap">
+          <h2 id="courses-h" className="h2">Курсы</h2>
+          <img className="g g-star" src="/graffiti/doodle-star.svg" alt="" width={160} height={160} loading="lazy" />
+        </div>
         <div className="bento bento-courses reveal-stagger">
           {home.courses.map((c, i) => (
             <article key={c.slug} className={`tile ${i === 0 ? "tile-blue course-big" : "tile-white"} course`}>
-              {c.image && <img className="course-art" src={c.image.src} alt="" width={500} height={500} loading="lazy" />}
+              <img className="course-graf spray" src={`/graffiti/throwup-${c.graffiti}.svg`} alt="" loading="lazy" />
               <p className="eyebrow">{c.forWhom}</p>
               <h3 className="h3">Курс «{c.name}»</h3>
               <ul className="chips">{c.specs.map((s) => <li key={s}>{s}</li>)}</ul>
@@ -86,12 +88,15 @@ export default function Home() {
         <div className="bento bento-team reveal-stagger">
           {home.teachers.map((t) => (
             <article key={t.name} className="tile tile-white teacher">
-              <img src={t.photo} alt={`${t.name} — ${t.role.toLowerCase()} MIXER`} width={600} height={600} loading="lazy" />
-              <div>
-                <p className="eyebrow">{t.role}</p>
-                <h3 className="h3">{t.name}</h3>
-                <p className="teacher-years">{t.years} <span>за пультом</span></p>
+              <div className="teacher-ph">
+                <img src={t.photo} alt={`${t.name} — ${t.role.toLowerCase()} MIXER`} width={800} height={1000} loading="lazy" />
+                <ul className="teacher-tags">
+                  <li>{t.role}</li>
+                  <li>{t.years} за пультом</li>
+                </ul>
+                <img className="teacher-tag spray" src={`/graffiti/tag-${t.photo.match(/teacher-(\w+)/)![1]}.svg`} alt="" loading="lazy" />
               </div>
+              <h3 className="h3">{t.name}</h3>
             </article>
           ))}
           <h3 className="h3 eq-title">Оборудование</h3>
@@ -140,9 +145,25 @@ export default function Home() {
         </section>
       )}
 
+      {/* Граффити-стена (v0.6), декоративная */}
+      <div className="sec" aria-hidden="true">
+        <div className="wall reveal">
+          <img className="wall-bg" src="/img/studio-05.webp" alt="" width={900} height={1125} loading="lazy" />
+          <img className="w-mixer spray" src="/graffiti/throwup-mixer.svg" alt="" loading="lazy" />
+          <img className="w-boom spray" src="/graffiti/throwup-boom.svg" alt="" loading="lazy" />
+          <img className="w-tag spray" src="/graffiti/tag-yunpronto.svg" alt="" loading="lazy" />
+          <img className="slap w-s1" src="/graffiti/sticker-1sec.svg" alt="" loading="lazy" />
+          <img className="slap w-s2" src="/graffiti/sticker-staya.svg" alt="" loading="lazy" />
+          <img className="slap w-s3" src="/graffiti/sticker-noskip.svg" alt="" loading="lazy" />
+        </div>
+      </div>
+
       {/* Вопросы */}
       <section className="sec" aria-labelledby="faq-h">
-        <h2 id="faq-h" className="h2 sec-title reveal">Частые вопросы</h2>
+        <div className="sec-title reveal g-wrap">
+          <h2 id="faq-h" className="h2">Частые вопросы</h2>
+          <img className="g g-arrow" src="/graffiti/doodle-arrow.svg" alt="" width={260} height={140} loading="lazy" />
+        </div>
         <div className="reveal"><FaqList items={home.faq} /></div>
       </section>
 
@@ -168,14 +189,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Форма — последняя секция */}
+      {/* Форма — финальная стена (v0.6): пластинка крутится быстрее с каждым заполненным полем */}
       <section className="sec" id="form" aria-labelledby="form-h">
-        <div className="tile tile-blue form-tile reveal">
-          <div>
+        <div className="form-wall reveal" data-level="0">
+          <img className="fw-bg spray" src="/graffiti/throwup-mixer.svg" alt="" loading="lazy" />
+          <div className="fw-copy">
+            <p className="eyebrow">Последний трек</p>
             <h2 id="form-h" className="h2">{home.form.title}</h2>
             <p className="lead-text">{home.form.text}</p>
+            <div className="vinyl" aria-hidden="true"><span className="vinyl-label">MIXER</span></div>
           </div>
-          <LeadForm source="form" button={home.form.button} dark />
+          <div className="pass">
+            <img className="slap pass-sticker" src="/graffiti/sticker-pass.svg" alt="" loading="lazy" />
+            <LeadForm source="form" button={home.form.button} />
+          </div>
+          <img className="slap fw-s1" src="/graffiti/sticker-dropit.svg" alt="" loading="lazy" />
+          <img className="slap fw-s2" src="/graffiti/sticker-boomboom.svg" alt="" loading="lazy" />
+          <FormFx />
         </div>
       </section>
     </>

@@ -32,7 +32,7 @@ ${home.teachers.map((t) => `- ${t.name} — ${t.role.toLowerCase()}, ${t.years} 
 
 ## Оборудование
 ${home.equipment.map((e) => `- Pioneer ${e.name} (${e.kind.toLowerCase()})`).join("\n")}
-${materials.length ? `\n## Полезные материалы\n${materials.map((m) => `- [${m.title}](${m.url}): ${m.description}`).join("\n")}\n` : ""}
+${site.features.materials && materials.length ? `\n## Полезные материалы\n${materials.map((m) => `- [${m.title}](${m.url}): ${m.description}`).join("\n")}\n` : ""}
 ## Как получить пробное занятие бесплатно
 Сведи трек в игре на главной странице: переведи кроссфейдер на деку B на словах «boom boom» с точностью до 1 секунды — откроется форма записи на бесплатное пробное занятие.
 
