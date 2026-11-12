@@ -366,8 +366,10 @@
 .eq:has(.hs) { overflow: visible; z-index: 1; }
 .hs { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; padding: 0; border: 2px solid #fff; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 0 4px oklch(0.747 0.157 36.9 / 0.35); }
 .hs::before { content: "+"; display: grid; place-items: center; height: 100%; color: var(--ink); font: 800 14px/1 var(--font-display); }
-@media (prefers-reduced-motion: no-preference) { .hs { animation: hs-ping 2s ease-out infinite; } }
-@keyframes hs-ping { 0% { box-shadow: 0 0 0 0 oklch(0.747 0.157 36.9 / 0.6); } 70%, 100% { box-shadow: 0 0 0 12px oklch(0.747 0.157 36.9 / 0); } }
+/* пульс — кольцо на transform и opacity: анимация идёт на видеокарте и не нагружает основной поток (PageSpeed) */
+.hs::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) { .hs::after { animation: hs-ping 2s ease-out infinite; } }
+@keyframes hs-ping { 0% { transform: scale(.8); opacity: .8; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
 .hs-tip { position: absolute; top: 50%; transform: translateY(-50%); width: max-content; max-width: min(220px, 60vw); padding: 10px 12px; border-radius: 12px; background: var(--ink); color: #fff; font: 400 12px/1.4 var(--font-sans); text-align: left; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; pointer-events: none; z-index: 5; box-shadow: 0 10px 30px oklch(0 0 0 / .3); }
 .hs-tip b { display: block; font-family: var(--font-display); font-size: 11px; text-transform: uppercase; color: var(--accent); margin-bottom: 2px; }
 .hs-r .hs-tip { left: calc(100% + 10px); }
