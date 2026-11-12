@@ -4,7 +4,7 @@ import { useState } from "react";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
-export function LeadForm({ source, button, dark = false }: { source: "form" | "game"; button: string; dark?: boolean }) {
+export function LeadForm({ source, button, dark = false, row = false }: { source: "form" | "game"; button: string; dark?: boolean; row?: boolean }) {
   const [status, setStatus] = useState<Status>("idle");
   const id = (n: string) => `${source}-${n}`;
 
@@ -34,7 +34,7 @@ export function LeadForm({ source, button, dark = false }: { source: "form" | "g
     );
 
   return (
-    <form className={dark ? "lead lead-dark" : "lead"} onSubmit={submit} noValidate={false}>
+    <form className={`lead${dark ? " lead-dark" : ""}${row ? " lead-row" : ""}`} onSubmit={submit} noValidate={false}>
       <input type="hidden" name="source" value={source === "game" ? "Пробное из игры «Сведи трек»" : "Форма внизу сайта"} />
       <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="lead-grid">
