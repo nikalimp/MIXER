@@ -1,6 +1,6 @@
 // JSON-LD по стандарту AI-Ready сайта, §5. Один @graph на страницу, сущности связаны через @id.
 import { site } from "@/content/site";
-import type { Faq, Service } from "@/content/services";
+import type { Faq } from "@/content/home";
 
 export const orgId = `${site.url}/#org`;
 export const websiteId = `${site.url}/#website`;
@@ -11,17 +11,20 @@ const c = site.contacts;
 export const orgSchema: Record<string, unknown> = {
   "@type": site.orgType,
   "@id": orgId,
-  name: site.name,
-  legalName: site.legalName,
+  name: site.brandLine,
+  alternateName: [site.name, "Mixer DJ School"],
+  ...(site.legalName && { legalName: site.legalName }),
+  parentOrganization: { "@type": "Organization", name: site.parent.name, url: site.parent.url },
   url: site.url,
   description: site.description,
-  foundingDate: String(site.foundingYear),
+  ...(site.foundingYear && { foundingDate: String(site.foundingYear) }),
   areaServed: site.areaServed,
+  ...(site.contacts.yandexOrgUrl && { hasMap: site.contacts.yandexOrgUrl }),
   ...(site.sameAs.length && { sameAs: site.sameAs }),
   ...(c.phone && { telephone: c.phone }),
   ...(c.email && { email: c.email }),
   ...(c.address.street && {
-    address: { "@type": "PostalAddress", streetAddress: c.address.street, addressLocality: c.address.city, addressRegion: c.address.region, postalCode: c.address.postalCode, addressCountry: c.address.country },
+    address: { "@type": "PostalAddress", streetAddress: c.address.street, addressLocality: c.address.city, addressRegion: c.address.region, ...(c.address.postalCode && { postalCode: c.address.postalCode }), addressCountry: c.address.country },
   }),
   ...(c.geo && { geo: { "@type": "GeoCoordinates", latitude: c.geo.lat, longitude: c.geo.lng } }),
   ...(c.openingHours.length && {
@@ -54,25 +57,6 @@ export function faqSchema(faq: Faq[]) {
   return {
     "@type": "FAQPage",
     mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-  };
-}
-
-export function serviceSchema(s: Service) {
-  return {
-    "@type": "Service",
-    name: s.title,
-    serviceType: s.h1,
-    description: s.answer,
-    url: `${site.url}/services/${s.slug}/`,
-    provider: { "@id": orgId },
-    areaServed: site.areaServed,
-    offers: s.prices.map((p) => ({
-      "@type": "Offer",
-      name: p.name,
-      description: [p.value, p.note].filter(Boolean).join(". "),
-      priceCurrency: "RUB",
-      ...(p.amount ? { price: String(p.amount) } : {}),
-    })),
   };
 }
 
