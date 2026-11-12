@@ -35,7 +35,7 @@ export default function Home() {
 
       {/* О школе — манифест с заполнением по скроллу, цифры в той же плитке, коллаж из 7 фото (v0.6) */}
       <section className="sec" id="about" aria-labelledby="about-h">
-        <div className="tile tile-white about-main reveal">
+        <div className="tile tile-white about-main">
           <p className="eyebrow">О школе</p>
           <ScrollFill id="about-h" className="h2 about-manifest" text={home.about.manifest} />
           <div className="about-body">
