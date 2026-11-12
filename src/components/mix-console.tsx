@@ -37,14 +37,12 @@ const FADER = { top: 150, bottom: 330, A: 452, B: 548 };
 const XF = { left: 430, right: 570, y: 392 };
 
 function Wave({ x, color, seed }: { x: number; color: string; seed: number }) {
-  return (
-    <g>
-      {Array.from({ length: 58 }, (_, i) => {
-        const h = 6 + Math.abs(Math.sin(i * 1.7 + seed) * 16 + Math.sin(i * 0.37) * 7);
-        return <rect key={i} x={x + 10 + i * 5.2} y={66 - h / 2} width={3} height={h} rx={1} fill={color} opacity={0.85} />;
-      })}
-    </g>
-  );
+  // Одна фигура вместо 58 прямоугольников — меньше узлов DOM, быстрее отрисовка (PageSpeed, стандарт §6.6)
+  const d = Array.from({ length: 58 }, (_, i) => {
+    const h = 6 + Math.abs(Math.sin(i * 1.7 + seed) * 16 + Math.sin(i * 0.37) * 7);
+    return `M${(x + 10 + i * 5.2).toFixed(1)} ${(66 - h / 2).toFixed(1)}h3v${h.toFixed(1)}h-3z`;
+  }).join("");
+  return <path d={d} fill={color} opacity={0.85} />;
 }
 
 export function MixConsole() {
@@ -362,10 +360,7 @@ export function MixConsole() {
           <circle cx={cx} cy={cy} r={120} fill={`url(#rim)`} />
           <circle cx={cx} cy={cy} r={105} fill="#14151c" />
           <g data-platter={id}>
-            {Array.from({ length: 48 }, (_, i) => {
-              const a = (i / 48) * Math.PI * 2;
-              return <line key={i} x1={cx + Math.cos(a) * 74} y1={cy + Math.sin(a) * 74} x2={cx + Math.cos(a) * 98} y2={cy + Math.sin(a) * 98} stroke="#2a2b36" strokeWidth={2} />;
-            })}
+            <circle cx={cx} cy={cy} r={86} fill="none" stroke="#2a2b36" strokeWidth={24} strokeDasharray="2 9.26" />
             <circle cx={cx} cy={cy} r={64} fill="#0f1017" stroke="#2a2b36" />
             <rect x={cx - 2} y={cy - 104} width={4} height={24} rx={2} fill="#fff" opacity={0.9} />
           </g>
