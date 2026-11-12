@@ -261,7 +261,7 @@
 @media (min-width: 1024px) {
   body { padding-bottom: 0; }
   .fab { display: none; }
-  .hdr { display: flex; position: sticky; top: 12px; z-index: 40; width: max-content; max-width: calc(100% - 2 * var(--pad)); margin: 12px auto 0; align-items: center; justify-content: space-between; gap: clamp(24px, 3vw, 48px); padding: 8px 8px 8px 24px; border-radius: 999px; background: oklch(0.147 0.011 285 / 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #fff; box-shadow: 0 10px 30px oklch(0 0 0 / 0.25); }
+  .hdr { display: flex; position: sticky; top: 12px; z-index: 40; width: calc(100% - 2 * var(--pad)); margin: 12px auto 0; align-items: center; justify-content: space-between; gap: clamp(24px, 3vw, 48px); padding: 8px 8px 8px 24px; border-radius: 999px; background: oklch(0.147 0.011 285 / 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #fff; box-shadow: 0 10px 30px oklch(0 0 0 / 0.25); }
   .hdr-logo { display: flex; }
   .hdr-logo img { height: 22px; width: auto; filter: invert(1); transform: translateY(-10%); } /* буквы в SVG ниже центра из-за «шпиля» над M — выравниваем по буквам */
   .hdr-links { list-style: none; padding: 0; display: flex; gap: clamp(12px, 2vw, 36px); font-size: 12px; font-weight: 700; text-transform: uppercase; }
@@ -352,3 +352,6 @@
   .lead-row .lead-submit { grid-area: btn; width: auto; min-height: 50px; padding-inline: 36px; }
 }
 @media (max-width: 767px) { .g-crown { display: none; } }
+
+/* Плавная прокрутка по якорям (v0.9); при «уменьшить движение» — без анимации */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
