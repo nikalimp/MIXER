@@ -4,6 +4,7 @@ import { site } from "@/content/site";
 import { materials, materialsHowTo } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
 import { ScrollFill } from "@/components/scroll-fill";
+import { HeroLogo } from "@/components/hero-logo";
 import { LeadForm } from "@/components/lead-form";
 import { FaqList } from "@/components/faq";
 import { JsonLd } from "@/components/json-ld";
@@ -26,7 +27,7 @@ export default function Home() {
 
       {/* Первый экран */}
       <section className="hero" id="top" aria-labelledby="h1">
-        <img className="hero-logo" src="/img/mixer.svg" alt="MIXER" width={1600} height={436} fetchPriority="high" />
+        <HeroLogo />
         <h1 id="h1" className="hero-h1">{home.h1}</h1>
         <p className="hero-sub">{home.sub}</p>
         {site.features.mixGame && <MixConsole />}
@@ -103,7 +104,14 @@ export default function Home() {
           <h3 className="h3 eq-title">Оборудование</h3>
           {home.equipment.map((e) => (
             <div key={e.name} className="tile tile-white eq">
-              <img src={e.photo} alt={`Pioneer ${e.name}`} width={600} height={600} loading="lazy" />
+              <div className="eq-ph">
+                <img src={e.photo} alt={`Pioneer ${e.name}`} width={600} height={600} loading="lazy" />
+                {e.hotspots?.map((h) => (
+                  <button key={h.label} type="button" className={`hs hs-${h.side}`} style={{ left: `${12.5 + h.x * 0.75}%`, top: `${h.y}%` }} aria-label={h.label}>
+                    <span className="hs-tip" role="tooltip"><b>{h.label}</b> {h.text}</span>
+                  </button>
+                ))}
+              </div>
               <p className="eq-kind">{e.kind}</p>
               <p className="eq-name">{e.name}</p>
             </div>
