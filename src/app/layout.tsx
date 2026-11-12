@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/unbounded/wght.css"; // Unbounded — шрифт всего сайта (decisions 2026-11-11), локально
+import "@fontsource-variable/unbounded/wght.css"; // Unbounded — заголовки, кнопки, цифры (decisions 2026-11-11)
+import "@fontsource-variable/onest/wght.css"; // Onest — основной текст (Ник, v0.3: читаемость)
 import "./globals.css";
 import { site } from "@/content/site";
-import { BottomBar } from "@/components/bottom-bar";
+import { SiteHeader } from "@/components/site-header";
+import { Reveal } from "@/components/reveal";
 import { Footer } from "@/components/footer";
 import { CookieBanner } from "@/components/cookie-banner";
 import { JsonLd } from "@/components/json-ld";
@@ -23,8 +25,9 @@ const metrikaScript = (id: number) =>
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={site.lang}>
+    <html lang={site.lang} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         {site.metrikaId > 0 && <script dangerouslySetInnerHTML={{ __html: metrikaScript(site.metrikaId) }} />}
         <JsonLd data={graph(websiteSchema, orgSchema)} />
       </head>
@@ -33,9 +36,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <noscript><div><img src={`https://mc.yandex.ru/watch/${site.metrikaId}`} style={{ position: "absolute", left: "-9999px" }} alt="" /></div></noscript>
         )}
         <a href="#main" className="skip">К содержанию</a>
+        <SiteHeader />
         <main id="main">{children}</main>
         <Footer />
-        <BottomBar />
+        <Reveal />
         <CookieBanner />
       </body>
     </html>

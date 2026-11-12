@@ -13,6 +13,7 @@
     "indexnow:key": "node scripts/indexnow.mjs key"
   },
   "dependencies": {
+    "@fontsource-variable/onest": "^5.3.1",
     "@fontsource-variable/unbounded": "^5.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -3,13 +3,12 @@ import { home } from "@/content/home";
 import { site } from "@/content/site";
 import { materials } from "@/content/materials";
 import { MixConsole } from "@/components/mix-console";
-import { Slider } from "@/components/slider";
 import { LeadForm } from "@/components/lead-form";
 import { FaqList } from "@/components/faq";
 import { JsonLd } from "@/components/json-ld";
 import { faqSchema, graph, orgId } from "@/lib/schema";
 
-// Главная — spec §5 (v0.2): без шапки, логотип во всю ширину, пульт, секции bento, форма внизу.
+// Главная — spec §5 (v0.3): шапка на десктопе, логотип во всю ширину, пульт, секции bento, форма внизу.
 export default function Home() {
   const a = site.contacts.address;
   const courseSchema = home.courses.map((c) => ({
@@ -32,24 +31,35 @@ export default function Home() {
         {site.features.mixGame && <MixConsole />}
       </section>
 
-      {/* О школе */}
+      {/* О школе — вариант A «Манифест + коллаж» (v0.3) */}
       <section className="sec" id="about" aria-labelledby="about-h">
-        <div className="bento bento-about">
-          <div className="tile tile-white about-main">
-            <h2 id="about-h" className="h2">{home.about.title}</h2>
+        <div className="tile tile-white about-main reveal">
+          <p className="eyebrow">О школе</p>
+          <h2 id="about-h" className="h2 about-manifest">{home.about.manifest}</h2>
+          <div className="about-body">
             <p className="lead-text">{home.answer}</p>
-            <ul className="dash-list">{home.about.points.map((p) => <li key={p}>{p}</li>)}</ul>
-          </div>
-          {home.about.stats.map((s, k) => (
-            <div key={s.value} className={`tile tile-black stat stat-${k + 1}`}>
-              <p className="stat-value">{s.value}</p>
-              <p className="stat-label">{s.label}</p>
+            <div>
+              <h3 className="h3">{home.about.title}</h3>
+              <ul className="dash-list">{home.about.points.map((p) => <li key={p}>{p}</li>)}</ul>
             </div>
+          </div>
+        </div>
+        <div className="collage reveal-stagger">
+          {home.slides.map((sl, k) => (
+            <figure key={sl.src} className={`collage-ph ph-${k + 1}`}>
+              <img src={sl.src} alt={sl.alt} width={900} height={1125} loading="lazy" decoding="async" />
+            </figure>
           ))}
-          <div className="tile tile-photo about-slider"><Slider slides={home.slides} /></div>
-          <div className="tile tile-blue about-cta">
-            <h3 className="h3">{home.about.cta.title}</h3>
-            <p>{home.about.cta.text}</p>
+          <div className="tile tile-black collage-stats">
+            {home.about.stats.map((st) => (
+              <div key={st.value} className="stat">
+                <p className="stat-value">{st.value}</p>
+                <p className="stat-label">{st.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="tile tile-blue collage-cta">
+            <p className="h3">{home.about.cta.title}</p>
             <a href="#top" className="btn btn-light">{home.about.cta.button}</a>
           </div>
         </div>
@@ -57,8 +67,8 @@ export default function Home() {
 
       {/* Курсы */}
       <section className="sec" id="courses" aria-labelledby="courses-h">
-        <h2 id="courses-h" className="h2 sec-title">Курсы</h2>
-        <div className="bento bento-courses">
+        <h2 id="courses-h" className="h2 sec-title reveal">Курсы</h2>
+        <div className="bento bento-courses reveal-stagger">
           {home.courses.map((c, i) => (
             <article key={c.slug} className={`tile ${i === 0 ? "tile-blue course-big" : "tile-white"} course`}>
               {c.image && <img className="course-art" src={c.image.src} alt="" width={500} height={500} loading="lazy" />}
@@ -75,8 +85,8 @@ export default function Home() {
 
       {/* Кто и на чём учит */}
       <section className="sec" id="team" aria-labelledby="team-h">
-        <h2 id="team-h" className="h2 sec-title">Кто и на чём учит</h2>
-        <div className="bento bento-team">
+        <h2 id="team-h" className="h2 sec-title reveal">Кто и на чём учит</h2>
+        <div className="bento bento-team reveal-stagger">
           {home.teachers.map((t) => (
             <article key={t.name} className="tile tile-white teacher">
               <img src={t.photo} alt={`${t.name} — ${t.role.toLowerCase()} MIXER`} width={600} height={600} loading="lazy" />
@@ -87,25 +97,21 @@ export default function Home() {
               </div>
             </article>
           ))}
-          <div className="tile tile-black equipment">
-            <h3 className="h3">Оборудование</h3>
-            <ul className="eq-grid">
-              {home.equipment.map((e) => (
-                <li key={e.name}>
-                  <img src={e.photo} alt={`Pioneer ${e.name}`} width={600} height={600} loading="lazy" />
-                  <p className="eq-kind">{e.kind}</p>
-                  <p className="eq-name">{e.name}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <h3 className="h3 eq-title">Оборудование</h3>
+          {home.equipment.map((e) => (
+            <div key={e.name} className="tile tile-white eq">
+              <img src={e.photo} alt={`Pioneer ${e.name}`} width={600} height={600} loading="lazy" />
+              <p className="eq-kind">{e.kind}</p>
+              <p className="eq-name">{e.name}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Дополнительные услуги */}
       <section className="sec" id="studio" aria-labelledby="studio-h">
-        <h2 id="studio-h" className="h2 sec-title">Дополнительные услуги</h2>
-        <div className="bento bento-services">
+        <h2 id="studio-h" className="h2 sec-title reveal">Дополнительные услуги</h2>
+        <div className="bento bento-services reveal-stagger">
           {home.services.map((s) => (
             <div key={s.name} className={`tile ${s.accent ? "tile-blue" : "tile-white"} service`}>
               <h3 className="h3">{s.name}</h3>
@@ -124,7 +130,7 @@ export default function Home() {
             <a href="/materials/" className="btn btn-dark">Все материалы</a>
           </div>
           {materials.length ? (
-            <div className="bento bento-mat">
+            <div className="bento bento-mat reveal-stagger">
               {materials.slice(0, 3).map((m) => (
                 <article key={m.url} className="tile tile-white mat">
                   <p className="eyebrow">{m.type}</p>
@@ -145,14 +151,14 @@ export default function Home() {
 
       {/* Вопросы */}
       <section className="sec" aria-labelledby="faq-h">
-        <h2 id="faq-h" className="h2 sec-title">Частые вопросы</h2>
-        <FaqList items={home.faq} />
+        <h2 id="faq-h" className="h2 sec-title reveal">Частые вопросы</h2>
+        <div className="reveal"><FaqList items={home.faq} /></div>
       </section>
 
       {/* Контакты */}
       <section className="sec" id="contacts" aria-labelledby="contacts-h">
-        <h2 id="contacts-h" className="h2 sec-title">Как найти нас</h2>
-        <div className="bento bento-contacts">
+        <h2 id="contacts-h" className="h2 sec-title reveal">Как найти нас</h2>
+        <div className="bento bento-contacts reveal-stagger">
           <div className="tile tile-white addr">
             <p className="eyebrow">{a.city}</p>
             <p className="addr-main">{a.streetShort}</p>
@@ -177,7 +183,7 @@ export default function Home() {
 
       {/* Форма — последняя секция */}
       <section className="sec" id="form" aria-labelledby="form-h">
-        <div className="tile tile-blue form-tile">
+        <div className="tile tile-blue form-tile reveal">
           <div>
             <h2 id="form-h" className="h2">{home.form.title}</h2>
             <p className="lead-text">{home.form.text}</p>
