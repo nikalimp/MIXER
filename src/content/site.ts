@@ -81,7 +81,7 @@ export const site = {
   features: {
     blog: false,
     mixGame: true, // игра «Сведи трек» в hero (spec §7.1)
-    materials: true, // раздел «Полезное» (spec §7.2)
+    materials: false, // раздел «Полезное» скрыт (Ник, v0.6); материалы остаются в src/content/materials.ts
   },
 };
 
