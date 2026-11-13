@@ -12,6 +12,11 @@ export type OrgType =
   | "HomeAndConstructionBusiness"
   | "Store";
 
+// Тестовая копия (стандарт «Боевой + тестовый»): сборка с NEXT_PUBLIC_STAGING=1 выкладывается на технический домен
+// (mixer.nikalimp.ru) параллельно с боевым. В ней noindex, robots Disallow, без Метрики, плашка «Тестовая версия»,
+// заявки помечаются «[ТЕСТ]». canonical и sitemap остаются на боевой домен.
+export const isStaging = process.env.NEXT_PUBLIC_STAGING === "1";
+
 export const site = {
   // Тестовый адрес. Боевой домен школы — Ник сообщит (requests.md §1.2); при переезде заменить здесь, в publish и workflow.
   url: "https://mixerekb.ru",
@@ -75,7 +80,7 @@ export const site = {
   person: null as null | { name: string; jobTitle: string; description: string; sameAs: string[] },
 
   // Метрика школы (Ник, 2026-11-13) — включается вместе с переездом на mixerekb.ru (стандарт §9.0).
-  metrikaId: 114227234,
+  metrikaId: isStaging ? 0 : 114227234,
   darkTheme: false,
 
   features: {

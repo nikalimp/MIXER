@@ -25,7 +25,7 @@
 ## Переезд (до запуска на домене школы)
 - [ ] T17 Цены курсов, ответы FAQ, часы работы, реквизиты — от клиента (requests.md)
 - [ ] T18 Убрать исключение `requisites` из `scripts/check.local.mjs`
-- [ ] T19 Домен школы: `site.url`, workflow `url`, Метрика 99510129 (`site.metrikaId`)
+- [x] T19 Домен школы mixerekb.ru: `site.url`, workflow `url`, Метрика 114227234; тестовая копия на mixer.nikalimp.ru
 - [ ] T20 301 stayaekb.ru/mixer → домен школы (Tilda «СТАЯ», Настройки → Редиректы)
 - [ ] T21 Ссылки на сайт в Telegram, Instagram, VK, карточке Яндекса — клиент
 

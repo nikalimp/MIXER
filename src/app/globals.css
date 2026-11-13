@@ -377,3 +377,7 @@
 .hs:hover .hs-tip, .hs:focus .hs-tip { opacity: 1; visibility: visible; }
 .hs:hover, .hs:focus { z-index: 6; }
 @media (max-width: 639px) { .hs-minor { display: none; } .hs { width: 18px; height: 18px; margin: -9px 0 0 -9px; } .hs::before { font-size: 12px; } }
+
+/* Плашка тестовой копии (NEXT_PUBLIC_STAGING=1) */
+.staging-badge { position: fixed; z-index: 60; left: 12px; bottom: 12px; padding: 8px 14px; border-radius: 999px; background: var(--accent); color: var(--ink); font: 800 11px/1 var(--font-display); text-transform: uppercase; box-shadow: 0 6px 20px oklch(0 0 0 / .25); }
+.staging-badge a { text-decoration: underline; }

@@ -1,7 +1,7 @@
 "use client";
 // Форма заявки → public/api/lead.php → Telegram школы (spec §7). Согласие — отдельный обязательный чекбокс (стандарт §8).
 import { useState } from "react";
-import { site } from "@/content/site";
+import { site, isStaging } from "@/content/site";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
@@ -36,7 +36,7 @@ export function LeadForm({ source, button, dark = false, row = false }: { source
 
   return (
     <form className={`lead${dark ? " lead-dark" : ""}${row ? " lead-row" : ""}`} onSubmit={submit} noValidate={false}>
-      <input type="hidden" name="source" value={source === "game" ? "Пробное из игры «Сведи трек»" : "Форма внизу сайта"} />
+      <input type="hidden" name="source" value={`${isStaging ? "[ТЕСТ] " : ""}${source === "game" ? "Пробное из игры «Сведи трек»" : "Форма внизу сайта"}`} />
       <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="lead-grid">
         <label htmlFor={id("name")}>Имя<input id={id("name")} name="name" type="text" autoComplete="name" required /></label>
