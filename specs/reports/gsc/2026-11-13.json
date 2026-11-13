@@ -1,0 +1,53 @@
+{
+ "site": "https://mixerekb.ru/",
+ "generated": "2026-11-13T08:10:48.816Z",
+ "period": {
+  "current": [
+   "2026-10-14",
+   "2026-11-10"
+  ],
+  "previous": [
+   "2026-09-16",
+   "2026-10-13"
+  ]
+ },
+ "totals": {
+  "current": null,
+  "previous": null
+ },
+ "daily": [],
+ "pages": [],
+ "pages90": [],
+ "pagesLost": [],
+ "queries": [],
+ "pageQueries": [],
+ "devices": [],
+ "countries": [],
+ "searchAppearance": [],
+ "sitemaps": [],
+ "sitemapUrls": 1,
+ "pagesWithImpressions": 0,
+ "bySection": {
+  "/": {
+   "urls": 1,
+   "withImpressions": 0,
+   "clicks": 0,
+   "impressions": 0
+  }
+ },
+ "coverage": {
+  "URL неизвестен Google": 1
+ },
+ "inspections": [
+  {
+   "url": "https://mixerekb.ru/",
+   "hasImpressions": false,
+   "verdict": "NEUTRAL",
+   "coverageState": "URL неизвестен Google",
+   "indexingState": "INDEXING_STATE_UNSPECIFIED",
+   "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+   "richResults": []
+  }
+ ]
+}

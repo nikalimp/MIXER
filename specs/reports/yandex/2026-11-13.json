@@ -1,0 +1,263 @@
+{
+ "host": "mixerekb.ru",
+ "generated": "2026-11-13T08:10:51.515Z",
+ "period": [
+  "2026-10-16",
+  "2026-11-12"
+ ],
+ "webmaster": {
+  "host": "https://mixerekb.ru/",
+  "verified": true,
+  "candidates": [
+   "https://mixerekb.ru/ verified=true"
+  ],
+  "summary": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/summary: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "queries": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-queries/popular: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "history": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-queries/all/history: {\"host_id\":null,\"error_code\":\"HOST_NOT_LOADED\",\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\"}"
+  },
+  "indexing": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/indexing/history: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "inSearch": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-urls/in-search/history: {\"host_id\":null,\"error_code\":\"HOST_NOT_LOADED\",\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\"}"
+  },
+  "sitemaps": {
+   "sitemaps": []
+  },
+  "diagnostics": {
+   "problems": {
+    "NO_REGIONS": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NOT_IN_SPRAV": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DISALLOWED_IN_ROBOTS": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DUPLICATE_CONTENT_ATTRS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_ROBOTS_TXT": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_METRIKA_COUNTER_BINDING": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "VIDEOHOST_OFFER_FAILED": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "FAVICON_PROBLEM": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NOT_MOBILE_FRIENDLY": {
+     "severity": "RECOMMENDATION",
+     "state": "UNDEFINED",
+     "last_state_update": null
+    },
+    "NO_SITEMAP_MODIFICATIONS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "URL_ALERT_5XX": {
+     "severity": "CRITICAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DOCUMENTS_MISSING_DESCRIPTION": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "VIDEOHOST_OFFER_NEED_PAPER": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DOCUMENTS_MISSING_TITLE": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "ERROR_IN_ROBOTS_TXT": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "TOO_MANY_DOMAINS_ON_SEARCH": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "INSIGNIFICANT_CGI_PARAMETER": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "SLOW_AVG_RESPONSE_TIME": {
+     "severity": "CRITICAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_METRIKA_COUNTER_CRAWL_ENABLED": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "CONNECT_FAILED": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_SITEMAPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "BIG_FAVICON_ABSENT": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "THREATS": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DUPLICATE_PAGES": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "MAIN_PAGE_ERROR": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "MAIN_MIRROR_IS_NOT_HTTPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "URL_ALERT_4XX": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DNS_ERROR": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "FAVICON_ERROR": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "MAIN_PAGE_REDIRECTS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "ERRORS_IN_SITEMAPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "SOFT_404": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    }
+   }
+  }
+ },
+ "metrika": {
+  "counter": {
+   "id": 114227234,
+   "site": "mixerekb.ru",
+   "status": "Active"
+  },
+  "metrics": [
+   "ym:s:visits",
+   "ym:s:users",
+   "ym:s:bounceRate",
+   "ym:s:avgVisitDurationSeconds"
+  ],
+  "sources": {
+   "totals": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "rows": []
+  },
+  "referers": {
+   "totals": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "rows": []
+  },
+  "ai": [],
+  "landing": {
+   "totals": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "rows": []
+  },
+  "landing90": {
+   "totals": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "rows": []
+  },
+  "daily": {
+   "totals": [
+    0,
+    0
+   ],
+   "rows": []
+  },
+  "goalsAny": {
+   "totals": [
+    0
+   ],
+   "rows": []
+  },
+  "leads": {
+   "goals": []
+  }
+ }
+}
