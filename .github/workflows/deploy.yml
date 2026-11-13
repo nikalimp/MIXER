@@ -23,7 +23,29 @@ jobs:
       out_dir: out                # Vite: dist
       app_path: ""                # приложение в подпапке сайта: "test/app/"
       rsync_exclude: ""           # подпапки других приложений и файлы только на сервере: "test/ api/config.php api/logs/"
-      url: https://mixer.nikalimp.ru
+      url: https://mixerekb.ru
       # media_brand: путь к brand.json от site_dir. По умолчанию content/factory/brand.json;
       # если завод ещё не переведён в content/factory/ — фактический путь (ECO-PRO: content/media/brand.json)
     secrets: inherit
+  # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
+  # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
+  # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.
+  staging:
+    needs: site
+    concurrency: { group: deploy-staging, cancel-in-progress: false }
+    permissions: { contents: write }
+    uses: nikalimp/deploy-kit/.github/workflows/site.yml@main
+    with:
+      adapter: ssh-ftp
+      site_dir: "."
+      out_dir: out
+      url: https://mixer.nikalimp.ru
+      build_command: NEXT_PUBLIC_STAGING=1 npm run build
+      pagespeed: ""
+    secrets:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASS: ${{ secrets.FTP_PASS }}
+      FTP_DIR: ${{ 'www/mixer.nikalimp.ru/' }}
+      NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
+      NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/content/site";
+import { site, isStaging } from "@/content/site";
 
 export const dynamic = "force-static";
 
@@ -9,6 +9,7 @@ export const dynamic = "force-static";
 const aiBots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "ClaudeBot", "Claude-SearchBot", "Google-Extended", "YandexBot", "YandexAdditional", "DeepSeekBot", "Applebot-Extended"];
 
 export default function robots(): MetadataRoute.Robots {
+  if (isStaging) return { rules: [{ userAgent: "*", disallow: "/" }] }; // тестовая копия закрыта целиком
   return {
     rules: [{ userAgent: "*", allow: "/" }, ...aiBots.map((b) => ({ userAgent: b, allow: "/" }))],
     sitemap: `${site.url}/sitemap.xml`,

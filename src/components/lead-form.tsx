@@ -1,6 +1,7 @@
 "use client";
 // Форма заявки → public/api/lead.php → Telegram школы (spec §7). Согласие — отдельный обязательный чекбокс (стандарт §8).
 import { useState } from "react";
+import { site, isStaging } from "@/content/site";
 
 type Status = "idle" | "sending" | "ok" | "error";
 
@@ -18,7 +19,7 @@ export function LeadForm({ source, button, dark = false, row = false }: { source
       const j = await r.json().catch(() => ({ ok: false }));
       setStatus(r.ok && j.ok ? "ok" : "error");
       if (r.ok && j.ok) {
-        try { (window as unknown as { ym?: (...a: unknown[]) => void }).ym?.(99510129, "reachGoal", source === "game" ? "lead_game" : "lead_form"); } catch {}
+        try { (window as unknown as { ym?: (...a: unknown[]) => void }).ym?.(site.metrikaId, "reachGoal", source === "game" ? "lead_game" : "lead_form"); } catch {}
       }
     } catch {
       setStatus("error");
@@ -35,7 +36,7 @@ export function LeadForm({ source, button, dark = false, row = false }: { source
 
   return (
     <form className={`lead${dark ? " lead-dark" : ""}${row ? " lead-row" : ""}`} onSubmit={submit} noValidate={false}>
-      <input type="hidden" name="source" value={source === "game" ? "Пробное из игры «Сведи трек»" : "Форма внизу сайта"} />
+      <input type="hidden" name="source" value={`${isStaging ? "[ТЕСТ] " : ""}${source === "game" ? "Пробное из игры «Сведи трек»" : "Форма внизу сайта"}`} />
       <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="lead-grid">
         <label htmlFor={id("name")}>Имя<input id={id("name")} name="name" type="text" autoComplete="name" required /></label>

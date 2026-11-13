@@ -24,5 +24,29 @@ jobs:
       adapter: ssh-ftp
       site_dir: "."
       out_dir: out
-      url: https://mixer.nikalimp.ru
+      url: https://mixerekb.ru
     secrets: inherit
+  # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
+  # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
+  # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.
+  staging:
+    needs: [pr, deploy]
+    if: needs.pr.outputs.merged == 'true'
+    concurrency: { group: deploy-staging, cancel-in-progress: false }
+    permissions: { contents: write }
+    uses: nikalimp/deploy-kit/.github/workflows/site.yml@main
+    with:
+      ref: main
+      adapter: ssh-ftp
+      site_dir: "."
+      out_dir: out
+      url: https://mixer.nikalimp.ru
+      build_command: NEXT_PUBLIC_STAGING=1 npm run build
+      pagespeed: ""
+    secrets:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASS: ${{ secrets.FTP_PASS }}
+      FTP_DIR: ${{ 'www/mixer.nikalimp.ru/' }}
+      NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
+      NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}

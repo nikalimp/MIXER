@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // Шрифты OFL локально из public/fonts (@font-face в globals.css); все четыре файла предзагружаются (пробелы и «» — в латинском файле), запасной шрифт подогнан по метрикам — без сдвига вёрстки (PageSpeed, v0.6)
 import "./globals.css";
-import { site } from "@/content/site";
+import { site, isStaging } from "@/content/site";
 import { SiteHeader } from "@/components/site-header";
 import { Reveal } from "@/components/reveal";
 import { Footer } from "@/components/footer";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: { type: "website", locale: site.locale, siteName: site.brandLine, title: site.title, description: site.description, url: site.url, images: ["/og.png"] },
-  robots: { index: true, follow: true },
+  robots: isStaging ? { index: false, follow: false } : { index: true, follow: true },
   icons: { icon: "/favicon.svg" },
 };
 
@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <noscript><div><img src={`https://mc.yandex.ru/watch/${site.metrikaId}`} style={{ position: "absolute", left: "-9999px" }} alt="" /></div></noscript>
         )}
         <a href="#main" className="skip">К содержанию</a>
+        {isStaging && <div className="staging-badge" aria-hidden="true">Тестовая версия · <a href={site.url}>боевой сайт</a></div>}
         <SiteHeader />
         <main id="main">{children}</main>
         <Footer />
