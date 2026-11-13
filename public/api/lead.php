@@ -1,6 +1,6 @@
 <?php
 // Приём заявок MIXER → Telegram-канал школы через бота (и почта, если указана). Spec §7.
-// Секреты — НЕ в репозитории. Основной путь (Ник, 2026-11-13): GitHub-секрет BUILD_ENV (LEAD_TG_TOKEN, LEAD_TG_CHAT) →
+// Секреты — НЕ в репозитории. Основной путь (Ник, 2026-11-13): GitHub-секреты LEAD_BOT_TOKEN и LEAD_CHAT_ID →
 // при сборке scripts/lead-config.mjs пишет api/lead-secrets.php (закрыт .htaccess). Запасной путь — www/lead-config.php
 // на сервере уровнем выше папки сайта. Формат обоих: ['tg_token' => '123:ABC', 'tg_chat' => ['-100…'], 'email' => '', 'from' => ''].
 header('Content-Type: application/json; charset=utf-8');
