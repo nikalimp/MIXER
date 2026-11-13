@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="foot">
       <div className="foot-row">
-        <span>© {new Date().getFullYear()} {site.brandLine}{req && ` · ${req}`}</span>
+        <span>© {site.copyright.since}–{new Date().getFullYear()} {site.copyright.holder}{req && ` · ${req}`}</span>
         <span className="foot-links">
           {site.socials.map((s) => <a key={s.href} href={s.href} target="_blank" rel="noopener me">{s.label}</a>)}
         </span>

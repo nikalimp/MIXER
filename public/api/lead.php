@@ -1,9 +1,15 @@
 <?php
-// Приём заявок MIXER → Telegram школы (и почта, если указана). Spec §7.
+// Приём заявок MIXER → Telegram школы, беседа ВКонтакте и почта — куда указано в конфиге. Spec §7.
 // Секреты — НЕ в репозитории: файл lead-config.php лежит уровнем выше папки сайта
 // (REG.RU: www/lead-config.php рядом с www/<домен>/) — выкладка его не видит и не стирает.
 // Формат lead-config.php:
-//   <?php return ['tg_token' => '123:ABC', 'tg_chat' => '-100123', 'email' => '', 'from' => 'noreply@домен'];
+//   <?php return [
+//     'tg_token' => '123:ABC', 'tg_chat' => '-100123',            // Telegram: токен бота и id чата (можно массив чатов)
+//     'vk_token' => 'vk1.a.…', 'vk_peer' => '2000000001',         // ВКонтакте: ключ доступа сообщества (права «сообщения»)
+//                                                                  // и peer_id беседы (2000000000 + номер беседы) или id человека
+//     'email' => '', 'from' => 'noreply@mixerekb.ru',
+//   ];
+// Любой канал можно не заполнять. Заявка считается отправленной, если дошла хотя бы в один.
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
 
@@ -46,6 +52,17 @@ if (!empty($cfg['tg_token']) && !empty($cfg['tg_chat'])) {
       CURLOPT_POSTFIELDS => ['chat_id' => $chat, 'text' => $text, 'disable_web_page_preview' => 'true']]);
     $r = curl_exec($ch); $code = curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close($ch);
     if ($r !== false && $code === 200) $sent = true;
+  }
+}
+if (!empty($cfg['vk_token']) && !empty($cfg['vk_peer'])) {
+  foreach ((array)$cfg['vk_peer'] as $peer) {
+    $ch = curl_init('https://api.vk.com/method/messages.send');
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10,
+      CURLOPT_POSTFIELDS => ['peer_id' => $peer, 'random_id' => random_int(1, PHP_INT_MAX), 'message' => $text,
+        'dont_parse_links' => 1, 'access_token' => $cfg['vk_token'], 'v' => '5.199']]);
+    $r = curl_exec($ch); curl_close($ch);
+    $j = $r !== false ? json_decode($r, true) : null;
+    if (isset($j['response'])) $sent = true;
   }
 }
 if (!empty($cfg['email'])) {
