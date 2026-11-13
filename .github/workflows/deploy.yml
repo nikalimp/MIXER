@@ -34,7 +34,8 @@ jobs:
       FTP_DIR: ${{ 'www/mixerekb.ru/' }}
       NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
       NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
-      BUILD_ENV: ${{ secrets.BUILD_ENV }} # LEAD_TG_TOKEN, LEAD_TG_CHAT — секреты формы
+      # секреты формы заявок хранятся по одному (LEAD_BOT_TOKEN, LEAD_CHAT_ID) и передаются в сборку одной строкой через BUILD_ENV
+      BUILD_ENV: ${{ format('LEAD_BOT_TOKEN={0};LEAD_CHAT_ID={1}', secrets.LEAD_BOT_TOKEN, secrets.LEAD_CHAT_ID) }}
   # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
   # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
   # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.
@@ -57,4 +58,5 @@ jobs:
       FTP_DIR: ${{ 'www/mixer.nikalimp.ru/' }}
       NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
       NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
-      BUILD_ENV: ${{ secrets.BUILD_ENV }} # LEAD_TG_TOKEN, LEAD_TG_CHAT — секреты формы
+      # секреты формы заявок хранятся по одному (LEAD_BOT_TOKEN, LEAD_CHAT_ID) и передаются в сборку одной строкой через BUILD_ENV
+      BUILD_ENV: ${{ format('LEAD_BOT_TOKEN={0};LEAD_CHAT_ID={1}', secrets.LEAD_BOT_TOKEN, secrets.LEAD_CHAT_ID) }}
