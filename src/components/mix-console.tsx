@@ -1,19 +1,19 @@
 "use client";
 // Игра «Сведи трек» (spec §7.1, v0.4: корпус пульта — фон контейнера .mix-board, без отдельной плашки в SVG): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
-// Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от дропа на 0:09,7) или «Ещё раз» (промах).
+// Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от паузы на 0:08,4) или «Ещё раз» (промах).
 // Web Audio API без библиотек. Треки грузятся сразу после загрузки страницы, звук — после нажатия «Начать». Джоги — скретч.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SevenSeg } from "./seven-seg";
 import { LeadDialog } from "./lead-dialog";
 
-// Треки v1.2 (Ник, 2026-11-13): A — VILLIAN, madk1d «ДИНАСТИЯ» 0:51,8–1:07,9 (пауза → дроп на 1:01,6),
-// B — Playboi Carti «Magnolia» 0:02,95–0:14,95 (8 тактов хука). Нарезка по границам частей, mp3 128 kbps.
-const MIX_AT = 9.74; // секунда клипа A, где нужно свести: дроп после паузы
+// Треки v1.3 (Ник, 2026-11-13): A — PHARAOH «Танцы на останках» 0:18,0–0:26,85 (+2 с тишины), сводим на паузе 0:26,4;
+// B — VILLIAN, madk1d «ДИНАСТИЯ» 0:59,0–1:14,6: стартует в паузе, дроп через 2,6 с. mp3 128 kbps.
+const MIX_AT = 8.4; // секунда клипа A, где нужно свести: трек замолкает
 const WIN = 1; // окно удачи, ±с (решение Ника 2026-11-12)
-const MISS_AFTER = 5; // через сколько секунд после дропа засчитываем «упустил»
-const BPM_A = 152.5, BPM_B = 162.5;
-const B_START_RATE = BPM_A / BPM_B, B_RAMP = 4; // дека B стартует в темпе A и за 4 с выходит на свой
-const B_PLAY = 12; // длина клипа B
+const MISS_AFTER = 1.5; // через сколько секунд после паузы засчитываем «упустил» (клип A кончается)
+const BPM_A = 105, BPM_B = 152.5;
+const B_START_RATE = 1, B_RAMP = 1; // темпы 105 и 152,5 слишком разные: дека B играет сразу в своём темпе
+const B_PLAY = 15.6; // длина клипа B
 const SEC_PER_REV = 1.8; // оборот джога = 1,8 с трека
 const XFADE = 0.6; // длительность кроссфейда, с
 const TRACKS = { A: "/audio/deck-a.mp3", B: "/audio/deck-b.mp3" };
@@ -49,7 +49,7 @@ const LABEL: Record<Phase, string> = { idle: "Начать", loading: "Загр�
 
 export function MixConsole() {
   const [phase, setPhaseState] = useState<Phase>("idle");
-  const [status, setStatus] = useState("ДО ДРОПА");
+  const [status, setStatus] = useState("ДО ПАУЗЫ");
   const [live, setLive] = useState("");
   const [dialog, setDialog] = useState(false);
   const [timer, setTimer] = useState(fmt(MIX_AT));
@@ -175,7 +175,7 @@ export function MixConsole() {
         pulseOn(rem <= 3 && rem > -WIN);
         if (rem < -MISS_AFTER) {
           goal("mix_missed"); setPhase("lost"); pulseOn(false); stopAll();
-          setStatus("УПУСТИЛ МОМЕНТ"); setLive("Дроп прошёл. Нажмите «Ещё раз».");
+          setStatus("УПУСТИЛ МОМЕНТ"); setLive("Пауза прошла. Нажмите «Ещё раз».");
         }
       } else if (mixedRef.current) {
         const pb = curPos(B);
@@ -232,8 +232,8 @@ export function MixConsole() {
     A.gain!.gain.cancelScheduledValues(now()); B.gain!.gain.cancelScheduledValues(now());
     A.gain!.gain.setValueAtTime(1, now()); B.gain!.gain.setValueAtTime(0, now());
     mixedRef.current = false;
-    setPhase("playing"); setStatus("ДО ДРОПА"); goal("mix_start");
-    setLive("Играет «Династия». Нажмите «Свести» в момент дропа — сразу после паузы.");
+    setPhase("playing"); setStatus("ДО ПАУЗЫ"); goal("mix_start");
+    setLive("Играет PHARAOH. Нажмите «Свести», когда трек замолкает.");
     play(A);
     // Таймер и кнопка должны быть видны: если пульт не целиком на экране — показать его
     const r = wrap.current?.getBoundingClientRect();
@@ -304,7 +304,7 @@ export function MixConsole() {
       const up = () => { if (!d.scratching) return; d.scratching = false; if (d.wasPlaying) play(d); };
       on(jog, "pointerup", up); on(jog, "pointercancel", up);
     });
-    // Пасхалка (v1.0): скретч логотипа MIXER на первом экране — событие от HeroLogo, звук с деки A около дропа
+    // Пасхалка (v1.0): скретч логотипа MIXER на первом экране — событие от HeroLogo, звук с деки A около паузы
     let logoPos = MIX_AT - 1;
     const onLogo = (e: Event) => {
       const { dSec, dt } = (e as CustomEvent<{ dSec: number; dt: number }>).detail;
@@ -370,8 +370,8 @@ export function MixConsole() {
           </defs>
           <line x1={380} y1={16} x2={380} y2={424} stroke="#0b0c12" strokeWidth={3} />
           <line x1={620} y1={16} x2={620} y2={424} stroke="#0b0c12" strokeWidth={3} />
-          {deck("A", 0, "#6f6bff", "VILLIAN, MADK1D — ДИНАСТИЯ")}
-          {deck("B", 638, "#FF8562", "PLAYBOI CARTI — MAGNOLIA")}
+          {deck("A", 0, "#6f6bff", "PHARAOH — ТАНЦЫ НА ОСТАНКАХ")}
+          {deck("B", 638, "#FF8562", "VILLIAN, MADK1D — ДИНАСТИЯ")}
           <rect x={398} y={22} width={204} height={84} rx={10} fill="#060708" stroke="#2c2e3a" />
           <SevenSeg text={timer} x={412} y={42} h={46} on="#FF8562" off="#2a1a12" />
           <text x={500} y={140} fill={phase === "won" ? "#FF8562" : "#9a9ea8"} fontSize={11} fontWeight={700} textAnchor="middle">{status}</text>
