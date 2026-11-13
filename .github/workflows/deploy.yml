@@ -34,6 +34,7 @@ jobs:
       FTP_DIR: ${{ 'www/mixerekb.ru/' }}
       NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
       NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
+      BUILD_ENV: ${{ secrets.BUILD_ENV }} # LEAD_TG_TOKEN, LEAD_TG_CHAT — секреты формы
   # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
   # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
   # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.
@@ -56,3 +57,4 @@ jobs:
       FTP_DIR: ${{ 'www/mixer.nikalimp.ru/' }}
       NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
       NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
+      BUILD_ENV: ${{ secrets.BUILD_ENV }} # LEAD_TG_TOKEN, LEAD_TG_CHAT — секреты формы
