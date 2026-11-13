@@ -25,7 +25,14 @@ jobs:
       site_dir: "."
       out_dir: out
       url: https://mixerekb.ru
-    secrets: inherit
+    # папки на сервере — прямо здесь, не в секретах: так боевая и тестовая выкладки не перепутаются
+    secrets:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASS: ${{ secrets.FTP_PASS }}
+      FTP_DIR: ${{ 'www/mixerekb.ru/' }}
+      NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
+      NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
   # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
   # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
   # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.

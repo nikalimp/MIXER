@@ -26,7 +26,14 @@ jobs:
       url: https://mixerekb.ru
       # media_brand: путь к brand.json от site_dir. По умолчанию content/factory/brand.json;
       # если завод ещё не переведён в content/factory/ — фактический путь (ECO-PRO: content/media/brand.json)
-    secrets: inherit
+    # папки на сервере — прямо здесь, не в секретах: так боевая и тестовая выкладки не перепутаются
+    secrets:
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASS: ${{ secrets.FTP_PASS }}
+      FTP_DIR: ${{ 'www/mixerekb.ru/' }}
+      NOTIFY_BOT_TOKEN: ${{ secrets.NOTIFY_BOT_TOKEN }}
+      NOTIFY_CHAT_ID: ${{ secrets.NOTIFY_CHAT_ID }}
   # Тестовая копия на техническом домене — та же версия, параллельно с боевой (стандарт «Боевой + тестовый»).
   # Сборка с NEXT_PUBLIC_STAGING=1: noindex, robots Disallow, без Метрики, плашка «Тестовая версия», заявки с пометкой [ТЕСТ].
   # Идёт после боевой: IndexNow сравнивает с уже обновлённым боевым сайтом и ничего лишнего не отправляет.
