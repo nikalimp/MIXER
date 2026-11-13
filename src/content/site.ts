@@ -74,6 +74,8 @@ export const site = {
     { label: "ВКонтакте", href: "https://vk.com/mixerdjschoolekb" },
     { label: "Instagram*", href: "https://www.instagram.com/mixer_djschool" },
   ],
+  // Подпись в футере (Ник, 2026-11-13): «© 2018–<год> СТАЯ». Юрлицо — когда клиент ответит (legalName, legal).
+  copyright: { since: 2018, holder: "СТАЯ" },
   metaNote: "*Instagram принадлежит компании Meta Platforms Inc., деятельность которой признана экстремистской и запрещена в РФ.",
   parent: { name: "СТАЯ", url: "https://stayaekb.ru" },
 
