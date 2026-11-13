@@ -1,0 +1,4 @@
+# Секреты формы — только для lead.php, снаружи недоступны
+<Files "lead-secrets.php">
+  Require all denied
+</Files>

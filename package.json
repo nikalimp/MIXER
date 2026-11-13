@@ -6,6 +6,7 @@
     "dev": "next dev -p 3010",
     "prebuild": "node scripts/typograf.mjs",
     "build": "next build",
+    "postbuild": "node scripts/lead-config.mjs",
     "preview": "npx serve out -l 3011",
     "typograf": "node scripts/typograf.mjs",
     "typograf:check": "node scripts/typograf.mjs --check",

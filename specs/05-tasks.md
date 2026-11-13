@@ -18,7 +18,7 @@
 
 ## Выкладка
 - [x] T13 Сайт mixer.nikalimp.ru в ISPmanager, A-запись, SSL, FTP, секреты GitHub — Ник (`deploy-kit/setup-site.sh`)
-- [ ] T14 `www/lead-config.php` на сервере: токен бота и chat_id школы — Ник / клиент
+- [ ] T14 Секрет BUILD_ENV в GitHub: LEAD_TG_TOKEN и LEAD_TG_CHAT (канал школы, бот — админ) — Ник
 - [ ] T15 Тестовая заявка из формы и из игры — проверка: сообщение в Telegram
 - [ ] T16 Проверка на iPhone Safari и Android Chrome: звук, скретч пальцем, «Свести на B»
 
