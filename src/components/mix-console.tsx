@@ -2,6 +2,7 @@
 // Игра «Сведи трек» (spec §7.1, v0.4: корпус пульта — фон контейнера .mix-board, без отдельной плашки в SVG): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
 // Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от паузы на 0:08,4) или «Ещё раз» (промах).
 // Web Audio API без библиотек. Треки грузятся сразу после загрузки страницы, звук — после нажатия «Начать». Джоги — скретч.
+import { site } from "@/content/site";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SevenSeg } from "./seven-seg";
 import { LeadDialog } from "./lead-dialog";
@@ -27,7 +28,7 @@ type Deck = {
 };
 
 const goal = (name: string) => {
-  try { (window as unknown as { ym?: (...a: unknown[]) => void }).ym?.(99510129, "reachGoal", name); } catch {}
+  try { (window as unknown as { ym?: (...a: unknown[]) => void }).ym?.(site.metrikaId, "reachGoal", name); } catch {}
 };
 const fmt = (s: number) => {
   const v = Math.max(0, s), m = Math.floor(v / 60), r = v - m * 60;

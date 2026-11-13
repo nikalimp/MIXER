@@ -23,7 +23,7 @@ jobs:
       out_dir: out                # Vite: dist
       app_path: ""                # приложение в подпапке сайта: "test/app/"
       rsync_exclude: ""           # подпапки других приложений и файлы только на сервере: "test/ api/config.php api/logs/"
-      url: https://mixer.nikalimp.ru
+      url: https://mixerekb.ru
       # media_brand: путь к brand.json от site_dir. По умолчанию content/factory/brand.json;
       # если завод ещё не переведён в content/factory/ — фактический путь (ECO-PRO: content/media/brand.json)
     secrets: inherit

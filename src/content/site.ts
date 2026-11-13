@@ -14,7 +14,7 @@ export type OrgType =
 
 export const site = {
   // Тестовый адрес. Боевой домен школы — Ник сообщит (requests.md §1.2); при переезде заменить здесь, в publish и workflow.
-  url: "https://mixer.nikalimp.ru",
+  url: "https://mixerekb.ru",
   name: "MIXER",
   brandLine: "MIXER by СТАЯ",
   legalName: "", // TODO(клиент): ООО / ИП для политики ПДн и футера
@@ -74,8 +74,8 @@ export const site = {
 
   person: null as null | { name: string; jobTitle: string; description: string; sameAs: string[] },
 
-  // Метрика школы 99510129 подключается после выкладки на домен школы (стандарт §9.0); на тесте — 0.
-  metrikaId: 0,
+  // Метрика школы (Ник, 2026-11-13) — включается вместе с переездом на mixerekb.ru (стандарт §9.0).
+  metrikaId: 114227234,
   darkTheme: false,
 
   features: {
