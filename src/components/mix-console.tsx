@@ -1,20 +1,21 @@
 "use client";
 // Игра «Сведи трек» (spec §7.1, v0.4: корпус пульта — фон контейнера .mix-board, без отдельной плашки в SVG): пульт — дека A | центр (семисегментный таймер + большая круглая кнопка) | дека B.
-// Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от паузы на 0:08,4) или «Ещё раз» (промах).
+// Кнопка: «Начать» → «Свести» → «Записаться» (удача, ±1 с от 0:03,7 — тогда дроп трека B совпадёт с концом фразы трека A) или «Ещё раз» (промах).
 // Web Audio API без библиотек. Треки грузятся сразу после загрузки страницы, звук — после нажатия «Начать». Джоги — скретч.
 import { site } from "@/content/site";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SevenSeg } from "./seven-seg";
 import { LeadDialog } from "./lead-dialog";
 
-// Треки v1.3 (Ник, 2026-11-13): A — PHARAOH «Танцы на останках» 0:18,0–0:26,85 (+2 с тишины), сводим на паузе 0:26,4;
-// B — VILLIAN, madk1d «ДИНАСТИЯ» 0:59,0–1:14,6: стартует в паузе, дроп через 2,6 с. mp3 128 kbps.
-const MIX_AT = 8.4; // секунда клипа A, где нужно свести: трек замолкает
+// Треки v1.5 (Ник, 2026-11-14), фрагменты нарезал Ник: A — 9mice, Егор Крид, тёмный принц, madk1d «Jealous» (132 BPM, 8,6 с, 4 такта);
+// B — Pepel Nahudi «Заново завоевать» (130 BPM, 13,8 с: вступление 3,7 с, потом дроп).
+// Сведение как у диджея: B запускается под конец A, вступление B играет вместе с A, дроп B попадает на конец фразы A.
+const MIX_AT = 3.73; // секунда клипа A: старт 3-го такта; 3,7 с вступления B → дроп на 7,4 с, конец фразы A
 const WIN = 1; // окно удачи, ±с (решение Ника 2026-11-12)
-const MISS_AFTER = 1.5; // через сколько секунд после паузы засчитываем «упустил» (клип A кончается)
-const BPM_A = 105, BPM_B = 152.5;
-const B_START_RATE = 1, B_RAMP = 1; // темпы 105 и 152,5 слишком разные: дека B играет сразу в своём темпе
-const B_PLAY = 15.6; // длина клипа B
+const MISS_AFTER = 2.5; // через сколько секунд после момента сведения засчитываем «упустил» (клип A кончается на 8,6 с)
+const BPM_A = 132, BPM_B = 130;
+const B_START_RATE = BPM_A / BPM_B, B_RAMP = 6; // дека B стартует в темпе A (132) и за 6 с выходит на свой (130)
+const B_PLAY = 13.8; // длина клипа B
 const SEC_PER_REV = 1.8; // оборот джога = 1,8 с трека
 const XFADE = 0.6; // длительность кроссфейда, с
 const TRACKS = { A: "/audio/deck-a.mp3", B: "/audio/deck-b.mp3" };
@@ -50,7 +51,7 @@ const LABEL: Record<Phase, string> = { idle: "Начать", loading: "Загр�
 
 export function MixConsole() {
   const [phase, setPhaseState] = useState<Phase>("idle");
-  const [status, setStatus] = useState("ДО ПАУЗЫ");
+  const [status, setStatus] = useState("ДО СВЕДЕНИЯ");
   const [live, setLive] = useState("");
   const [dialog, setDialog] = useState(false);
   const [timer, setTimer] = useState(fmt(MIX_AT));
@@ -152,7 +153,7 @@ export function MixConsole() {
     pulseOn(false); goal("mix_switch");
     B.pos = 0; B.rate = B_START_RATE; B.gain!.gain.setValueAtTime(0, ctx.currentTime); play(B);
     B.ramp = { from: B_START_RATE, to: 1, t0: ctx.currentTime, dur: B_RAMP };
-    fade(B, 1, XFADE); fade(A, 0, XFADE); later(() => pause(A), XFADE * 1000 + 100);
+    fade(B, 1, XFADE); // A не глушим: вступление B идёт под конец фразы A, клип A затухает сам
     if (ad <= WIN) {
       setPhase("won"); goal("mix_win");
       setStatus("ИДЕАЛЬНО!");
@@ -176,7 +177,7 @@ export function MixConsole() {
         pulseOn(rem <= 3 && rem > -WIN);
         if (rem < -MISS_AFTER) {
           goal("mix_missed"); setPhase("lost"); pulseOn(false); stopAll();
-          setStatus("УПУСТИЛ МОМЕНТ"); setLive("Пауза прошла. Нажмите «Ещё раз».");
+          setStatus("УПУСТИЛ МОМЕНТ"); setLive("Момент прошёл. Нажмите «Ещё раз».");
         }
       } else if (mixedRef.current) {
         const pb = curPos(B);
@@ -233,8 +234,8 @@ export function MixConsole() {
     A.gain!.gain.cancelScheduledValues(now()); B.gain!.gain.cancelScheduledValues(now());
     A.gain!.gain.setValueAtTime(1, now()); B.gain!.gain.setValueAtTime(0, now());
     mixedRef.current = false;
-    setPhase("playing"); setStatus("ДО ПАУЗЫ"); goal("mix_start");
-    setLive("Играет PHARAOH. Нажмите «Свести», когда трек замолкает.");
+    setPhase("playing"); setStatus("ДО СВЕДЕНИЯ"); goal("mix_start");
+    setLive("Играет «Jealous». Нажмите «Свести», когда таймер дойдёт до нуля.");
     play(A);
     // Таймер и кнопка должны быть видны: если пульт не целиком на экране — показать его
     const r = wrap.current?.getBoundingClientRect();
@@ -305,7 +306,7 @@ export function MixConsole() {
       const up = () => { if (!d.scratching) return; d.scratching = false; if (d.wasPlaying) play(d); };
       on(jog, "pointerup", up); on(jog, "pointercancel", up);
     });
-    // Пасхалка (v1.0): скретч логотипа MIXER на первом экране — событие от HeroLogo, звук с деки A около паузы
+    // Пасхалка (v1.0): скретч логотипа MIXER на первом экране — событие от HeroLogo, звук с деки A около момента сведения
     let logoPos = MIX_AT - 1;
     const onLogo = (e: Event) => {
       const { dSec, dt } = (e as CustomEvent<{ dSec: number; dt: number }>).detail;
@@ -371,8 +372,8 @@ export function MixConsole() {
           </defs>
           <line x1={380} y1={16} x2={380} y2={424} stroke="#0b0c12" strokeWidth={3} />
           <line x1={620} y1={16} x2={620} y2={424} stroke="#0b0c12" strokeWidth={3} />
-          {deck("A", 0, "#6f6bff", "PHARAOH — ТАНЦЫ НА ОСТАНКАХ")}
-          {deck("B", 638, "#FF8562", "VILLIAN, MADK1D — ДИНАСТИЯ")}
+          {deck("A", 0, "#6f6bff", "9MICE, ЕГОР КРИД — JEALOUS")}
+          {deck("B", 638, "#FF8562", "PEPEL NAHUDI — ЗАНОВО ЗАВОЕВАТЬ")}
           <rect x={398} y={22} width={204} height={84} rx={10} fill="#060708" stroke="#2c2e3a" />
           <SevenSeg text={timer} x={412} y={42} h={46} on="#FF8562" off="#2a1a12" />
           <text x={500} y={140} fill={phase === "won" ? "#FF8562" : "#9a9ea8"} fontSize={11} fontWeight={700} textAnchor="middle">{status}</text>

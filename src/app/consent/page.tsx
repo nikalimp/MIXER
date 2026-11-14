@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 // не внутри политики и не одной галочкой с офертой. Эта страница — отдельный документ, на неё ведёт чекбокс
 // <ConsentCheckbox /> у каждой формы. Перед запуском — сверить цели и состав данных с реальными формами клиента.
 export default function Consent() {
-  const operator = site.legalName || "школа диджеинга MIXER (творческое объединение «СТАЯ»)"; // TODO(клиент): юрлицо, ИНН, ОГРН
-  const req = [site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `ОГРН ${site.legal.ogrn}`].filter(Boolean).join(", ");
+  const operator = site.legalName || "школа диджеинга MIXER (творческое объединение «СТАЯ»)";
+  const req = [site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `${site.legalName.startsWith("ИП") ? "ОГРНИП" : "ОГРН"} ${site.legal.ogrn}`].filter(Boolean).join(", ");
   const contact = site.legal.privacyEmail || site.contacts.email || `сообщение в Telegram ${site.contacts.telegram}`;
   return (
     <section className="legal">

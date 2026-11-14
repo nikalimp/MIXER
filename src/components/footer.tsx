@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 
 export function Footer() {
-  const req = [site.legalName, site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `ОГРН ${site.legal.ogrn}`].filter(Boolean).join(" · ");
+  const req = [site.legalName, site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `${site.legalName.startsWith("ИП") ? "ОГРНИП" : "ОГРН"} ${site.legal.ogrn}`].filter(Boolean).join(" · ");
   return (
     <footer className="foot">
       <div className="foot-row">

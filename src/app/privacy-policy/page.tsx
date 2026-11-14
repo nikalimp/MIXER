@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 // Типовая политика по 152-ФЗ, собирается из реквизитов в src/content/site.ts.
 // Перед запуском — сверить с фактической обработкой данных клиента (формы, CRM, рассылки) и, если есть, с его юристом.
 export default function Privacy() {
-  const operator = site.legalName || "школа диджеинга MIXER (творческое объединение «СТАЯ»)"; // TODO(клиент): юрлицо, ИНН, ОГРН
-  const req = [site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `ОГРН ${site.legal.ogrn}`].filter(Boolean).join(", ");
+  const operator = site.legalName || "школа диджеинга MIXER (творческое объединение «СТАЯ»)";
+  const req = [site.legal.inn && `ИНН ${site.legal.inn}`, site.legal.ogrn && `${site.legalName.startsWith("ИП") ? "ОГРНИП" : "ОГРН"} ${site.legal.ogrn}`].filter(Boolean).join(", ");
   const contact = site.legal.privacyEmail || site.contacts.email || `сообщение в Telegram ${site.contacts.telegram}`;
   return (
     <section className="legal">
