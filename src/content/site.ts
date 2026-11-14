@@ -22,7 +22,7 @@ export const site = {
   url: "https://mixerekb.ru",
   name: "MIXER",
   brandLine: "MIXER by СТАЯ",
-  legalName: "", // TODO(клиент): ООО / ИП для политики ПДн и футера
+  legalName: "ИП Жуков Максим Вячеславович", // реквизиты от клиента 2026-11-14 (PDF в materials/)
   orgType: "EducationalOrganization" as OrgType,
   title: "Школа диджеинга в Екатеринбурге — MIXER by СТАЯ",
   description:
@@ -58,8 +58,8 @@ export const site = {
   cta: { label: "Записаться", href: "#form" },
 
   legal: {
-    inn: "", // TODO(клиент)
-    ogrn: "", // TODO(клиент)
+    inn: "667801277107",
+    ogrn: "322665800036386", // ОГРНИП
     privacyEmail: "",
   },
 
