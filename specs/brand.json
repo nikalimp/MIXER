@@ -1,0 +1,33 @@
+{
+  "name": "MIXER DJ School",
+  "site": "https://mixerekb.ru",
+  "siteLabel": "mixerekb.ru",
+  "logo": "../public/img/mixer.svg",
+  "font": {
+    "family": "Onest",
+    "files": [
+      {
+        "path": "../public/fonts/onest-cyrillic-wght-normal.woff2",
+        "weight": "100 900"
+      },
+      {
+        "path": "../public/fonts/onest-latin-wght-normal.woff2",
+        "weight": "100 900"
+      }
+    ]
+  },
+  "colors": {
+    "bg": "oklch(1 0 0)",
+    "fg": "oklch(0.147 0.011 285)",
+    "card": "oklch(1 0 0)",
+    "muted": "oklch(0.93 0.003 229)",
+    "mfg": "oklch(0.428 0.01 271)",
+    "border": "oklch(0.147 0.011 285 / 12%)",
+    "brand": "oklch(0.513 0.274 272)",
+    "brandBg": "oklch(0.93 0.04 272)",
+    "onBrand": "oklch(1 0 0)",
+    "shade": "oklch(0.221 0.016 285)"
+  },
+  "radius": 18,
+  "pattern": "dots"
+}
