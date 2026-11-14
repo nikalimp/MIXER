@@ -1,6 +1,6 @@
 {
  "host": "mixerekb.ru",
- "generated": "2026-11-14T07:01:23.477Z",
+ "generated": "2026-11-14T11:23:34.627Z",
  "period": [
   "2026-10-17",
   "2026-11-13"
@@ -328,7 +328,44 @@
    "rows": []
   },
   "leads": {
-   "goals": []
+   "goals": [
+    {
+     "id": 681439543,
+     "name": "Заявка с формы (lead_form)"
+    },
+    {
+     "id": 681439800,
+     "name": "Заявка после игры (lead_game)"
+    }
+   ],
+   "bySource": {
+    "totals": [
+     0,
+     0
+    ],
+    "rows": []
+   },
+   "byLanding": {
+    "totals": [
+     0,
+     0
+    ],
+    "rows": []
+   },
+   "daily": {
+    "totals": [
+     0,
+     0
+    ],
+    "rows": []
+   },
+   "byLanding90": {
+    "totals": [
+     0,
+     0
+    ],
+    "rows": []
+   }
   }
  }
 }
