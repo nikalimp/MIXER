@@ -1,0 +1,212 @@
+{
+ "site": "https://mixerekb.ru/",
+ "generated": "2026-11-21T12:30:16.373Z",
+ "period": {
+  "current": [
+   "2026-10-22",
+   "2026-11-18"
+  ],
+  "previous": [
+   "2026-09-24",
+   "2026-10-21"
+  ]
+ },
+ "totals": {
+  "current": {
+   "clicks": 2,
+   "impressions": 8,
+   "ctr": 25,
+   "position": 6.6
+  },
+  "previous": null
+ },
+ "daily": [
+  {
+   "date": "2026-11-11",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-12",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-13",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-14",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 7.5
+  },
+  {
+   "date": "2026-11-15",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-16",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-17",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 9
+  },
+  {
+   "date": "2026-11-18",
+   "clicks": 2,
+   "impressions": 4,
+   "ctr": 50,
+   "position": 5
+  }
+ ],
+ "pages": [
+  {
+   "key": "https://mixerekb.ru/",
+   "clicks": 2,
+   "impressions": 8,
+   "ctr": 25,
+   "position": 6.6,
+   "prev": null
+  },
+  {
+   "key": "https://mixerekb.ru/privacy-policy/",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5,
+   "prev": null
+  }
+ ],
+ "pages90": [
+  {
+   "page": "https://mixerekb.ru/",
+   "clicks": 2,
+   "impressions": 8,
+   "ctr": 25,
+   "position": 6.6
+  },
+  {
+   "page": "https://mixerekb.ru/privacy-policy/",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5
+  }
+ ],
+ "pagesLost": [],
+ "queries": [
+  {
+   "key": "школа диджеинга екатеринбург",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 9.3,
+   "prev": null
+  }
+ ],
+ "pageQueries": [
+  {
+   "page": "https://mixerekb.ru/",
+   "query": "школа диджеинга екатеринбург",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 9.3
+  }
+ ],
+ "devices": [
+  {
+   "device": "MOBILE",
+   "clicks": 2,
+   "impressions": 7,
+   "ctr": 28.57,
+   "position": 6
+  },
+  {
+   "device": "DESKTOP",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 11
+  }
+ ],
+ "countries": [
+  {
+   "country": "rus",
+   "clicks": 2,
+   "impressions": 8,
+   "ctr": 25,
+   "position": 6.6
+  }
+ ],
+ "searchAppearance": [],
+ "sitemaps": [],
+ "sitemapUrls": 1,
+ "pagesWithImpressions": 2,
+ "bySection": {
+  "/": {
+   "urls": 1,
+   "withImpressions": 1,
+   "clicks": 2,
+   "impressions": 8
+  },
+  "/privacy-policy/": {
+   "urls": 0,
+   "withImpressions": 0,
+   "clicks": 0,
+   "impressions": 1
+  }
+ },
+ "coverage": {
+  "Страница отправлена и проиндексирована": 2
+ },
+ "inspections": [
+  {
+   "url": "https://mixerekb.ru/",
+   "hasImpressions": true,
+   "verdict": "PASS",
+   "coverageState": "Страница отправлена и проиндексирована",
+   "indexingState": "INDEXING_ALLOWED",
+   "robotsTxtState": "ALLOWED",
+   "pageFetchState": "SUCCESSFUL",
+   "lastCrawlTime": "2026-11-13T09:06:31Z",
+   "googleCanonical": "https://mixerekb.ru/",
+   "userCanonical": "https://mixerekb.ru/",
+   "crawledAs": "MOBILE",
+   "richResults": []
+  },
+  {
+   "url": "https://mixerekb.ru/privacy-policy/",
+   "hasImpressions": true,
+   "verdict": "PASS",
+   "coverageState": "Страница отправлена и проиндексирована",
+   "indexingState": "INDEXING_ALLOWED",
+   "robotsTxtState": "ALLOWED",
+   "pageFetchState": "SUCCESSFUL",
+   "lastCrawlTime": "2026-11-14T04:39:36Z",
+   "googleCanonical": "https://mixerekb.ru/privacy-policy/",
+   "userCanonical": "https://mixerekb.ru/privacy-policy/",
+   "crawledAs": "MOBILE",
+   "richResults": []
+  }
+ ]
+}
