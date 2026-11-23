@@ -1,0 +1,27 @@
+{
+  "title": "Отчёт недели: MIXER",
+  "period": "16.11–22.11.2026",
+  "date": "23.11.2026",
+  "kpi": [
+    {
+      "label": "Визиты (7д)",
+      "value": "57",
+      "note": "+84 % к прошлой"
+    },
+    {
+      "label": "Клики Google",
+      "value": "2",
+      "note": "8 показов · поз. 6.6"
+    },
+    {
+      "label": "Лиды (28д)",
+      "value": "1 / 3",
+      "note": "lead_form / mix_cta"
+    },
+    {
+      "label": "PageSpeed mob.",
+      "value": "77",
+      "note": "цель ≥ 90"
+    }
+  ]
+}
