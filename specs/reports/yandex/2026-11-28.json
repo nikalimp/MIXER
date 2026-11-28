@@ -1,0 +1,721 @@
+{
+ "host": "mixerekb.ru",
+ "generated": "2026-11-28T08:11:24.042Z",
+ "period": [
+  "2026-10-31",
+  "2026-11-27"
+ ],
+ "webmaster": {
+  "host": "https://mixerekb.ru/",
+  "sitemapAdded": {
+   "url": "https://mixerekb.ru/sitemap.xml",
+   "status": 504,
+   "body": ""
+  },
+  "verified": true,
+  "candidates": [
+   "https://mixerekb.ru/ verified=true"
+  ],
+  "summary": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/summary: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "queries": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-queries/popular: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "history": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-queries/all/history: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "indexing": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/indexing/history: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "inSearch": {
+   "error": "404 https://api.webmaster.yandex.net/v4/user/120314602/hosts/https%3Amixerekb.ru%3A443/search-urls/in-search/history: {\"host_id\":null,\"error_message\":\"Host \\\"https:mixerekb.ru:443\\\" is not loaded in Ya.Webmaster yet\",\"error_code\":\"HOST_NOT_LOADED\"}"
+  },
+  "sitemaps": {
+   "sitemaps": []
+  },
+  "diagnostics": {
+   "problems": {
+    "SOFT_404": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DISALLOWED_IN_ROBOTS": {
+     "severity": "FATAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "CONNECT_FAILED": {
+     "severity": "FATAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "NO_SITEMAP_MODIFICATIONS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "SLOW_AVG_RESPONSE_TIME": {
+     "severity": "CRITICAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "THREATS": {
+     "severity": "FATAL",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "VIDEOHOST_OFFER_FAILED": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_REGIONS": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "ERROR_IN_ROBOTS_TXT": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DUPLICATE_PAGES": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "MAIN_MIRROR_IS_NOT_HTTPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_METRIKA_COUNTER_BINDING": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "URL_ALERT_5XX": {
+     "severity": "CRITICAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "DOCUMENTS_MISSING_TITLE": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "VIDEOHOST_OFFER_NEED_PAPER": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NOT_MOBILE_FRIENDLY": {
+     "severity": "RECOMMENDATION",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "FAVICON_ERROR": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_ROBOTS_TXT": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "NO_SITEMAPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DOCUMENTS_MISSING_DESCRIPTION": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DNS_ERROR": {
+     "severity": "FATAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "MAIN_PAGE_REDIRECTS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "BIG_FAVICON_ABSENT": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "URL_ALERT_4XX": {
+     "severity": "RECOMMENDATION",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "ERRORS_IN_SITEMAPS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "DUPLICATE_CONTENT_ATTRS": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "FAVICON_PROBLEM": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "TOO_MANY_DOMAINS_ON_SEARCH": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "NO_METRIKA_COUNTER_CRAWL_ENABLED": {
+     "severity": "POSSIBLE_PROBLEM",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "INSIGNIFICANT_CGI_PARAMETER": {
+     "severity": "RECOMMENDATION",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    },
+    "NOT_IN_SPRAV": {
+     "severity": "RECOMMENDATION",
+     "state": "ABSENT",
+     "last_state_update": null
+    },
+    "MAIN_PAGE_ERROR": {
+     "severity": "FATAL",
+     "state": "NOT_APPLICABLE",
+     "last_state_update": null
+    }
+   }
+  }
+ },
+ "metrika": {
+  "counter": {
+   "id": 114227234,
+   "site": "mixerekb.ru",
+   "status": "Active"
+  },
+  "metrics": [
+   "ym:s:visits",
+   "ym:s:users",
+   "ym:s:bounceRate",
+   "ym:s:avgVisitDurationSeconds"
+  ],
+  "sources": {
+   "totals": [
+    169,
+    143,
+    50.88757396,
+    49.30177515
+   ],
+   "rows": [
+    {
+     "key": "Direct traffic",
+     "values": [
+      128,
+      114,
+      60.15625,
+      39.3203125
+     ]
+    },
+    {
+     "key": "Link traffic",
+     "values": [
+      25,
+      19,
+      32,
+      96.2
+     ]
+    },
+    {
+     "key": "Social network traffic",
+     "values": [
+      11,
+      10,
+      9.09090909,
+      70
+     ]
+    },
+    {
+     "key": "Search engine traffic",
+     "values": [
+      5,
+      2,
+      0,
+      24.8
+     ]
+    }
+   ]
+  },
+  "referers": {
+   "totals": [
+    41,
+    31,
+    21.95121951,
+    80.46341463
+   ],
+   "rows": [
+    {
+     "key": "stayaekb.ru",
+     "values": [
+      25,
+      20,
+      20,
+      109.92
+     ]
+    },
+    {
+     "key": "google.com",
+     "values": [
+      5,
+      2,
+      0,
+      24.8
+     ]
+    },
+    {
+     "key": "l.instagram.com",
+     "values": [
+      3,
+      3,
+      0,
+      57.66666667
+     ]
+    },
+    {
+     "key": "away.vk.ru",
+     "values": [
+      2,
+      2,
+      50,
+      85.5
+     ]
+    },
+    {
+     "key": "aicrawler.store",
+     "values": [
+      1,
+      1,
+      100,
+      1
+     ]
+    },
+    {
+     "key": "aimanhunt.online",
+     "values": [
+      1,
+      1,
+      100,
+      2
+     ]
+    },
+    {
+     "key": "dataindex.pro",
+     "values": [
+      1,
+      1,
+      100,
+      2
+     ]
+    },
+    {
+     "key": "facebook.com",
+     "values": [
+      1,
+      1,
+      0,
+      15
+     ]
+    },
+    {
+     "key": "m.facebook.com",
+     "values": [
+      1,
+      1,
+      0,
+      15
+     ]
+    },
+    {
+     "key": "mixer.nikalimp.ru",
+     "values": [
+      1,
+      1,
+      0,
+      48
+     ]
+    }
+   ]
+  },
+  "ai": [],
+  "landing": {
+   "totals": [
+    170,
+    144,
+    51.17647059,
+    49.01176471
+   ],
+   "rows": [
+    {
+     "key": "/",
+     "values": [
+      168,
+      142,
+      50.5952381,
+      49.5952381
+     ]
+    },
+    {
+     "key": "/privacy-policy/",
+     "values": [
+      2,
+      2,
+      100,
+      0
+     ]
+    }
+   ]
+  },
+  "landing90": {
+   "totals": [
+    170,
+    144,
+    51.17647059,
+    49.01176471
+   ],
+   "rows": [
+    {
+     "key": "/",
+     "values": [
+      168,
+      142,
+      50.5952381,
+      49.5952381
+     ]
+    },
+    {
+     "key": "/privacy-policy/",
+     "values": [
+      2,
+      2,
+      100,
+      0
+     ]
+    }
+   ]
+  },
+  "daily": {
+   "totals": [
+    170,
+    144
+   ],
+   "rows": [
+    {
+     "key": "2026-11-13",
+     "values": [
+      31,
+      30
+     ]
+    },
+    {
+     "key": "2026-11-14",
+     "values": [
+      18,
+      18
+     ]
+    },
+    {
+     "key": "2026-11-15",
+     "values": [
+      7,
+      6
+     ]
+    },
+    {
+     "key": "2026-11-16",
+     "values": [
+      7,
+      7
+     ]
+    },
+    {
+     "key": "2026-11-17",
+     "values": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "2026-11-18",
+     "values": [
+      10,
+      9
+     ]
+    },
+    {
+     "key": "2026-11-19",
+     "values": [
+      6,
+      5
+     ]
+    },
+    {
+     "key": "2026-11-20",
+     "values": [
+      7,
+      6
+     ]
+    },
+    {
+     "key": "2026-11-21",
+     "values": [
+      42,
+      39
+     ]
+    },
+    {
+     "key": "2026-11-22",
+     "values": [
+      4,
+      4
+     ]
+    },
+    {
+     "key": "2026-11-23",
+     "values": [
+      10,
+      10
+     ]
+    },
+    {
+     "key": "2026-11-24",
+     "values": [
+      9,
+      9
+     ]
+    },
+    {
+     "key": "2026-11-25",
+     "values": [
+      4,
+      2
+     ]
+    },
+    {
+     "key": "2026-11-26",
+     "values": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "2026-11-27",
+     "values": [
+      11,
+      11
+     ]
+    }
+   ]
+  },
+  "goalsAny": {
+   "totals": [
+    88
+   ],
+   "rows": [
+    {
+     "key": "Direct traffic",
+     "values": [
+      58
+     ]
+    },
+    {
+     "key": "Social network traffic",
+     "values": [
+      22
+     ]
+    },
+    {
+     "key": "Link traffic",
+     "values": [
+      5
+     ]
+    },
+    {
+     "key": "Search engine traffic",
+     "values": [
+      3
+     ]
+    }
+   ]
+  },
+  "leads": {
+   "goals": [
+    {
+     "id": 681439543,
+     "name": "Заявка с формы (lead_form)"
+    },
+    {
+     "id": 681439800,
+     "name": "Заявка после игры (lead_game)"
+    },
+    {
+     "id": 683012051,
+     "name": "Автоцель: отправка формы"
+    },
+    {
+     "id": 685919566,
+     "name": "Игра: кнопка записи после победы (mix_cta)"
+    }
+   ],
+   "bySource": {
+    "totals": [
+     1,
+     1,
+     1,
+     12
+    ],
+    "rows": [
+     {
+      "key": "Link traffic",
+      "values": [
+       1,
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "key": "Direct traffic",
+      "values": [
+       0,
+       0,
+       0,
+       10
+      ]
+     },
+     {
+      "key": "Search engine traffic",
+      "values": [
+       0,
+       0,
+       0,
+       1
+      ]
+     },
+     {
+      "key": "Social network traffic",
+      "values": [
+       0,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   "byLanding": {
+    "totals": [
+     1,
+     1,
+     1,
+     12
+    ],
+    "rows": [
+     {
+      "key": "/",
+      "values": [
+       1,
+       1,
+       1,
+       12
+      ]
+     }
+    ]
+   },
+   "daily": {
+    "totals": [
+     1,
+     1,
+     1,
+     12
+    ],
+    "rows": [
+     {
+      "key": "2026-11-18",
+      "values": [
+       1,
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "key": "2026-11-20",
+      "values": [
+       0,
+       0,
+       0,
+       3
+      ]
+     },
+     {
+      "key": "2026-11-21",
+      "values": [
+       0,
+       0,
+       0,
+       2
+      ]
+     },
+     {
+      "key": "2026-11-22",
+      "values": [
+       0,
+       0,
+       0,
+       1
+      ]
+     },
+     {
+      "key": "2026-11-24",
+      "values": [
+       0,
+       1,
+       1,
+       6
+      ]
+     }
+    ]
+   },
+   "byLanding90": {
+    "totals": [
+     1,
+     1,
+     1,
+     12
+    ],
+    "rows": [
+     {
+      "key": "/",
+      "values": [
+       1,
+       1,
+       1,
+       12
+      ]
+     }
+    ]
+   }
+  }
+ }
+}
